@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akenxi — Cửa hàng bán phụ kiện điện thoại chính hãng</title>
+<meta name="description" content="Akenxi — Cửa hàng bán phụ kiện điện thoại chính hãng: tai nghe, sạc, cáp, ốp lưng, pin dự phòng. Bảo hành 12 tháng.">
+<link rel="icon" type="image/png" sizes="64x64" href="images/favicon.png">
+<link rel="preload" href="models/Headphone.glb" as="fetch" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img class="logo-img" src="images/logo.png" alt="Akenxi" width="270" height="120">
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Menu chính">
+        <ul>
+          <li><a href="index.html" class="is-active" aria-current="page">Trang chủ</a></li>
+          <li><a href="san-pham.html">Sản phẩm</a></li>
+          <li><a href="ve-chung-toi.html">Về chúng tôi</a></li>
+          <li><a href="tin-tuc.html">Tin tức</a></li>
+          <li><a href="lien-he.html">Liên hệ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" type="button" aria-label="Tìm kiếm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" type="button" aria-label="Giỏ hàng" data-cart-open>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+            <circle cx="10" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle>
+          </svg>
+          <span class="badge" data-cart-count>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Mở menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+<!-- ============================ HERO BANNER ============================ -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 7h11v9H3zm11 3h4l3 3v3h-7z"></path>
+              <circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle>
+            </svg>
+            Giao hàng toàn quốc
+          </p>
+          <h1>Akenxi</h1>
+          <p class="hero-sub">Cửa hàng bán phụ kiện điện thoại chính hãng</p>
+          <a class="btn btn-primary" href="san-pham.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+              <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+            </svg>
+            Mua ngay
+          </a>
+        </div>
+
+        <div class="hero-visual">
+          <div class="model-wrap">
+            <div class="model-floor" aria-hidden="true"><span></span></div>
+            <div class="model-shadow" aria-hidden="true"></div>
+            <canvas id="headphoneCanvas" aria-label="Mô hình tai nghe 3D" role="img"></canvas>
+            <div class="model-loader" id="modelLoader">
+              <div class="bar"><i id="loaderBar"></i></div>
+              <span id="loaderText">Đang tải mô hình 3D… 0%</span>
+            </div>
+          </div>
+
+          <ul class="hero-badges" aria-label="Cam kết của Akenxi">
+            <li class="hero-badge b-tl">
+              <span class="hb-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 7h11v9H3zm11 3h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle>
+                </svg>
+              </span>
+              <span class="hb-text"><strong>Miễn phí vận chuyển</strong><span>Đơn từ 300.000₫</span></span>
+            </li>
+            <li class="hero-badge b-tr">
+              <span class="hb-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3l7 3v5.5c0 4.3-2.9 7.6-7 9.5-4.1-1.9-7-5.2-7-9.5V6z"></path><path d="m9 12 2 2 4-4"></path>
+                </svg>
+              </span>
+              <span class="hb-text"><strong>Hàng chính hãng</strong><span>Bảo hành 12 tháng</span></span>
+            </li>
+            <li class="hero-badge b-bl">
+              <span class="hb-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 12a8 8 0 1 1 2.5 5.8L4 20"></path><path d="M12 8v4l3 2"></path>
+                </svg>
+              </span>
+              <span class="hb-text"><strong>Đổi mới 30 ngày</strong><span>Lỗi là đổi, không sửa</span></span>
+            </li>
+            <li class="hero-badge b-br">
+              <span class="hb-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v2.5a2.5 2.5 0 0 1-2.7 2.5A17 17 0 0 1 4 5.7 2.5 2.5 0 0 1 6.5 3H9l1.5 4.5-2 1.5a12.5 12.5 0 0 0 6.5 6.5l1.5-2z"></path>
+                </svg>
+              </span>
+              <span class="hb-text"><strong>Hỗ trợ 24/7</strong><span>Hotline 1900 6868</span></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- ============================= DANH MỤC ============================== -->
+    <section class="section" id="danh-muc">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Danh mục sản phẩm</h2>
+        </div>
+
+        <div class="cat-grid">
+          <a class="cat-card reveal" href="san-pham.html">
+            <span class="cat-thumb">
+              <img src="images/categories/tai-nghe.webp" alt="Tai nghe" width="360" height="360" loading="lazy" decoding="async">
+            </span>
+            <h3>Tai nghe</h3>
+            <p>842 sản phẩm</p>
+          </a>
+          <a class="cat-card reveal" href="san-pham.html">
+            <span class="cat-thumb">
+              <img src="images/categories/sac-cap.webp" alt="Sạc & Cáp" width="360" height="360" loading="lazy" decoding="async">
+            </span>
+            <h3>Sạc &amp; Cáp</h3>
+            <p>1.108 sản phẩm</p>
+          </a>
+          <a class="cat-card reveal" href="san-pham.html">
+            <span class="cat-thumb">
+              <img src="images/categories/op-lung.webp" alt="Ốp lưng" width="360" height="360" loading="lazy" decoding="async">
+            </span>
+            <h3>Ốp lưng</h3>
+            <p>1.436 sản phẩm</p>
+          </a>
+          <a class="cat-card reveal" href="san-pham.html">
+            <span class="cat-thumb">
+              <img src="images/categories/pin-du-phong.webp" alt="Pin dự phòng" width="360" height="360" loading="lazy" decoding="async">
+            </span>
+            <h3>Pin dự phòng</h3>
+            <p>394 sản phẩm</p>
+          </a>
+          <a class="cat-card reveal" href="san-pham.html">
+            <span class="cat-thumb">
+              <img src="images/categories/cuong-luc.webp" alt="Cường lực" width="360" height="360" loading="lazy" decoding="async">
+            </span>
+            <h3>Cường lực</h3>
+            <p>287 sản phẩm</p>
+          </a>
+          <a class="cat-card reveal" href="san-pham.html">
+            <span class="cat-thumb">
+              <img src="images/categories/gia-do-xe.webp" alt="Giá đỡ & Xe" width="360" height="360" loading="lazy" decoding="async">
+            </span>
+            <h3>Giá đỡ &amp; Xe</h3>
+            <p>163 sản phẩm</p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ BÁN CHẠY ============================== -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head has-link reveal">
+          <h2>Sản phẩm bán chạy</h2>
+          <a class="link-more" href="san-pham.html">Xem tất cả</a>
+        </div>
+
+        <div class="slider" data-slider>
+          <button class="slider-btn prev" type="button" data-slider-prev aria-label="Xem sản phẩm trước">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+          </button>
+
+          <div class="slider-view" data-slider-view>
+            <div class="slider-track" data-slider-track>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-41%</span>
+              <img src="images/products/tai-nghe-inspire-xh1.webp" alt="Tai nghe chụp tai Inspire XH1 (100h, Smart ANC)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Tai nghe chụp tai Inspire XH1 (100h, Smart ANC)</h3>
+              <div class="stars" aria-label="4.9 trên 5 sao">★★★★★ <span>4.9 (312)</span></div>
+              <div class="prod-price"><strong>2.590.000₫</strong><s>4.401.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="tai-nghe-inspire-xh1" data-name="Tai nghe chụp tai Inspire XH1 (100h, Smart ANC)" data-price="2590000" data-img="images/products/tai-nghe-inspire-xh1.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-52%</span>
+              <img src="images/products/tai-nghe-tws-bass-bs1.webp" alt="Tai nghe TWS Bass BS1 (Adaptive ANC, IP55)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Tai nghe TWS Bass BS1 (Adaptive ANC, IP55)</h3>
+              <div class="stars" aria-label="4.8 trên 5 sao">★★★★★ <span>4.8 (1.204)</span></div>
+              <div class="prod-price"><strong>550.000₫</strong><s>1.156.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="tai-nghe-tws-bass-bs1" data-name="Tai nghe TWS Bass BS1 (Adaptive ANC, IP55)" data-price="550000" data-img="images/products/tai-nghe-tws-bass-bs1.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-35%</span>
+              <img src="images/products/tai-nghe-eli-sport-2.webp" alt="Tai nghe TWS Eli Sport 2 (IP57, 8h)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Tai nghe TWS Eli Sport 2 (IP57, 8h)</h3>
+              <div class="stars" aria-label="4.7 trên 5 sao">★★★★★ <span>4.7 (876)</span></div>
+              <div class="prod-price"><strong>990.000₫</strong><s>1.520.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="tai-nghe-eli-sport-2" data-name="Tai nghe TWS Eli Sport 2 (IP57, 8h)" data-price="990000" data-img="images/products/tai-nghe-eli-sport-2.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-41%</span>
+              <img src="images/products/cu-sac-palm-1c-20w.webp" alt="Củ sạc nhanh Palm 1C 20W" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Củ sạc nhanh Palm 1C 20W</h3>
+              <div class="stars" aria-label="4.8 trên 5 sao">★★★★★ <span>4.8 (2.031)</span></div>
+              <div class="prod-price"><strong>180.000₫</strong><s>306.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="cu-sac-palm-1c-20w" data-name="Củ sạc nhanh Palm 1C 20W" data-price="180000" data-img="images/products/cu-sac-palm-1c-20w.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-36%</span>
+              <img src="images/products/cu-sac-palm-cu-20w.webp" alt="Củ sạc Palm C+U 20W (2 cổng USB + Type-C)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Củ sạc Palm C+U 20W (2 cổng USB + Type-C)</h3>
+              <div class="stars" aria-label="4.7 trên 5 sao">★★★★★ <span>4.7 (1.418)</span></div>
+              <div class="prod-price"><strong>190.000₫</strong><s>299.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="cu-sac-palm-cu-20w" data-name="Củ sạc Palm C+U 20W (2 cổng USB + Type-C)" data-price="190000" data-img="images/products/cu-sac-palm-cu-20w.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-23%</span>
+              <img src="images/products/cap-dura-240w.webp" alt="Cáp sạc C to C Dura Series 240W" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Cáp sạc C to C Dura Series 240W</h3>
+              <div class="stars" aria-label="4.9 trên 5 sao">★★★★★ <span>4.9 (3.402)</span></div>
+              <div class="prod-price"><strong>120.000₫</strong><s>156.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="cap-dura-240w" data-name="Cáp sạc C to C Dura Series 240W" data-price="120000" data-img="images/products/cap-dura-240w.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-30%</span>
+              <img src="images/products/cap-day-rut-3in1.webp" alt="Cáp dây rút Bright Mirror 2 (3-in-1)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Cáp dây rút Bright Mirror 2 (3-in-1)</h3>
+              <div class="stars" aria-label="4.6 trên 5 sao">★★★★★ <span>4.6 (1.577)</span></div>
+              <div class="prod-price"><strong>190.000₫</strong><s>270.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="cap-day-rut-3in1" data-name="Cáp dây rút Bright Mirror 2 (3-in-1)" data-price="190000" data-img="images/products/cap-day-rut-3in1.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-35%</span>
+              <img src="images/products/pin-picogo-qi2-10000.webp" alt="Pin dự phòng PicoGo AM41 Qi2 10.000mAh 27W" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Pin dự phòng PicoGo AM41 Qi2 10.000mAh 27W</h3>
+              <div class="stars" aria-label="4.8 trên 5 sao">★★★★★ <span>4.8 (642)</span></div>
+              <div class="prod-price"><strong>990.000₫</strong><s>1.512.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="pin-picogo-qi2-10000" data-name="Pin dự phòng PicoGo AM41 Qi2 10.000mAh 27W" data-price="990000" data-img="images/products/pin-picogo-qi2-10000.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-55%</span>
+              <img src="images/products/pin-free2pull-10000.webp" alt="Pin dự phòng Free2Pull 10.000mAh 30W (kèm cáp)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Pin dự phòng Free2Pull 10.000mAh 30W (kèm cáp)</h3>
+              <div class="stars" aria-label="4.7 trên 5 sao">★★★★★ <span>4.7 (531)</span></div>
+              <div class="prod-price"><strong>690.000₫</strong><s>1.547.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="pin-free2pull-10000" data-name="Pin dự phòng Free2Pull 10.000mAh 30W (kèm cáp)" data-price="690000" data-img="images/products/pin-free2pull-10000.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-23%</span>
+              <img src="images/products/de-sac-khong-day-led.webp" alt="Đế sạc không dây Digital LED Gen 2 15W" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Đế sạc không dây Digital LED Gen 2 15W</h3>
+              <div class="stars" aria-label="4.6 trên 5 sao">★★★★★ <span>4.6 (389)</span></div>
+              <div class="prod-price"><strong>400.000₫</strong><s>520.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="de-sac-khong-day-led" data-name="Đế sạc không dây Digital LED Gen 2 15W" data-price="400000" data-img="images/products/de-sac-khong-day-led.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-23%</span>
+              <img src="images/products/loa-aequr-30-air.webp" alt="Loa bluetooth AeQur 30 Air (IPX5, 16h)" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Loa bluetooth AeQur 30 Air (IPX5, 16h)</h3>
+              <div class="stars" aria-label="4.8 trên 5 sao">★★★★★ <span>4.8 (724)</span></div>
+              <div class="prod-price"><strong>990.000₫</strong><s>1.281.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="loa-aequr-30-air" data-name="Loa bluetooth AeQur 30 Air (IPX5, 16h)" data-price="990000" data-img="images/products/loa-aequr-30-air.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+          <article class="prod-card reveal">
+            <div class="prod-thumb">
+              <span class="flag">-22%</span>
+              <img src="images/products/gia-do-o-to-magpro.webp" alt="Giá đỡ điện thoại ô tô MagPro Series II" width="480" height="480" loading="lazy" decoding="async">
+            </div>
+            <div class="prod-body">
+              <p class="prod-brand">Baseus</p>
+              <h3>Giá đỡ điện thoại ô tô MagPro Series II</h3>
+              <div class="stars" aria-label="4.7 trên 5 sao">★★★★★ <span>4.7 (431)</span></div>
+              <div class="prod-price"><strong>405.000₫</strong><s>520.000₫</s></div>
+              <button class="btn-cart" type="button" data-add-to-cart
+                data-id="gia-do-o-to-magpro" data-name="Giá đỡ điện thoại ô tô MagPro Series II" data-price="405000" data-img="images/products/gia-do-o-to-magpro.webp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+                  <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+                </svg>
+                Thêm vào giỏ
+              </button>
+            </div>
+          </article>
+            </div>
+          </div>
+
+          <button class="slider-btn next" type="button" data-slider-next aria-label="Xem sản phẩm tiếp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+<!-- ============================= ĐÁNH GIÁ ============================= -->
+    <section class="section section-alt" id="danh-gia">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Khách hàng nói gì</h2>
+        </div>
+
+        <div class="testi-grid">
+          <figure class="testi-card reveal">
+            <div class="stars">★★★★★</div>
+            <blockquote>Tai nghe đúng như mô tả, chống ồn ăn hẳn tiếng xe bus. Giao sau 90 phút, đóng gói kỹ.</blockquote>
+            <figcaption><span class="avatar">MT</span><div><strong>Minh Trí</strong><span>Đống Đa, Hà Nội</span></div></figcaption>
+          </figure>
+          <figure class="testi-card reveal">
+            <div class="stars">★★★★★</div>
+            <blockquote>Cáp sạc mua chỗ khác 2 tháng là hỏng. Bên này đo công suất tại quầy cho xem luôn.</blockquote>
+            <figcaption><span class="avatar">HL</span><div><strong>Hồng Loan</strong><span>Quận 7, TP.HCM</span></div></figcaption>
+          </figure>
+          <figure class="testi-card reveal">
+            <div class="stars">★★★★★</div>
+            <blockquote>Ốp bị vàng sau 3 tuần, nhắn tin là đổi cái mới không hỏi nhiều. Dịch vụ đáng tiền.</blockquote>
+            <figcaption><span class="avatar">QD</span><div><strong>Quang Duy</strong><span>Hải Châu, Đà Nẵng</span></div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+<!-- ============================ NEWSLETTER ============================ -->
+    <section class="section news" id="lien-he">
+      <div class="container news-inner reveal">
+        <div>
+          <h2>Nhận thông báo hàng mới về</h2>
+          <p>Mỗi tuần một email: sản phẩm mới và mã giảm giá. Huỷ đăng ký bất cứ lúc nào.</p>
+        </div>
+        <form class="news-form" onsubmit="return false">
+          <input type="email" placeholder="email@cua-ban.com" aria-label="Email của bạn" required>
+          <button class="btn btn-primary" type="submit">Đăng ký</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  </main>
+
+<footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">
+          <img class="logo-img" src="images/logo.png" alt="Akenxi" width="270" height="120">
+        </a>
+        <p>Cửa hàng phụ kiện điện thoại chính hãng — 6 chi nhánh tại Hà Nội, TP.HCM, Đà Nẵng.</p>
+        <p class="footer-hotline">Hotline: <b>1900 6868</b></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sản phẩm</h4>
+        <ul>
+          <li><a href="san-pham.html">Tai nghe</a></li>
+          <li><a href="san-pham.html">Sạc &amp; Cáp</a></li>
+          <li><a href="san-pham.html">Ốp lưng</a></li>
+          <li><a href="san-pham.html">Pin dự phòng</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="lien-he.html">Chính sách bảo hành</a></li>
+          <li><a href="lien-he.html">Đổi trả 30 ngày</a></li>
+          <li><a href="lien-he.html">Vận chuyển</a></li>
+          <li><a href="lien-he.html">Câu hỏi thường gặp</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Cửa hàng</h4>
+        <ul>
+          <li>128 Thái Hà, Đống Đa, Hà Nội</li>
+          <li>45 Nguyễn Huệ, Q.1, TP.HCM</li>
+          <li>210 Nguyễn Văn Linh, Đà Nẵng</li>
+          <li>08:30 – 21:30 mỗi ngày</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Akenxi. Website demo — sản phẩm và số liệu chỉ mang tính minh hoạ.</p>
+      <ul class="footer-legal">
+        <li><a href="lien-he.html">Điều khoản</a></li>
+        <li><a href="lien-he.html">Bảo mật</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Liên hệ nhanh cố định góc phải -->
+  <div class="quick-contact" aria-label="Liên hệ nhanh">
+    <a class="qc-btn qc-zalo" href="https://zalo.me/1900686868" target="_blank" rel="noopener" title="Chat Zalo">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <path fill="#fff" d="M24 7C13.6 7 5.2 14 5.2 22.6c0 4.9 2.7 9.3 7 12.2-.3 2-1.1 4-2.4 5.7-.5.7.2 1.6 1 1.3 3.3-1.1 6-2.6 7.9-4 1.6.4 3.4.6 5.3.6 10.4 0 18.8-7 18.8-15.8S34.4 7 24 7z"/>
+          <text x="24" y="27.5" text-anchor="middle" font-family="__SvnMontFont_81fb87, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#0068ff">Zalo</text>
+        </svg>
+      </span>
+      <span class="qc-label">Zalo</span>
+    </a>
+    <a class="qc-btn qc-phone" href="tel:19006868" title="Gọi 1900 6868">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v2.5a2.5 2.5 0 0 1-2.7 2.5A17 17 0 0 1 4 5.7 2.5 2.5 0 0 1 6.5 3H9l1.5 4.5-2 1.5a12.5 12.5 0 0 0 6.5 6.5l1.5-2z"></path>
+        </svg>
+      </span>
+      <span class="qc-label">1900 6868</span>
+    </a>
+    <a class="qc-btn qc-mess" href="https://m.me/akenxi" target="_blank" rel="noopener" title="Chat Messenger">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.2c-5.4 0-9.8 4-9.8 9 0 2.8 1.4 5.3 3.6 6.9v3.7l3.4-1.9c.9.2 1.8.4 2.8.4 5.4 0 9.8-4 9.8-9s-4.4-9.1-9.8-9.1zm.6 12-2.5-2.6-4.7 2.6 5.2-5.5 2.5 2.5 4.6-2.5-5.1 5.5z"></path>
+        </svg>
+      </span>
+      <span class="qc-label">Messenger</span>
+    </a>
+  </div>
+
+  <!-- Giỏ hàng -->
+  <div class="cart-overlay" data-cart-overlay hidden></div>
+
+  <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng" aria-hidden="true" hidden>
+    <div class="cart-head">
+      <h2>Giỏ hàng <span class="cart-head-count" data-cart-count>0</span></h2>
+      <button class="cart-close" type="button" data-cart-close aria-label="Đóng giỏ hàng">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-body" data-cart-items></div>
+
+    <div class="cart-foot">
+      <div class="cart-total"><span>Tổng tiền</span><strong data-cart-total>0₫</strong></div>
+      <button class="btn btn-primary" type="button" data-cart-checkout>Thanh toán</button>
+      <p class="cart-note">Demo — chưa gắn cổng thanh toán.</p>
+    </div>
+  </aside>
+
+  <div class="toast" data-toast hidden></div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./js/vendor/three/build/three.module.js",
+      "three/addons/": "./js/vendor/three/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="js/main.js"></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanh toán — Akenxi</title>
+<meta name="description" content="Thanh toán đơn hàng tại Akenxi: nhập thông tin nhận hàng, chọn COD, chuyển khoản ngân hàng hoặc Momo.">
+<link rel="icon" type="image/png" sizes="64x64" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img class="logo-img" src="images/logo.png" alt="Akenxi" width="270" height="120">
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Menu chính">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="san-pham.html">Sản phẩm</a></li>
+          <li><a href="ve-chung-toi.html">Về chúng tôi</a></li>
+          <li><a href="tin-tuc.html">Tin tức</a></li>
+          <li><a href="lien-he.html">Liên hệ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" type="button" aria-label="Tìm kiếm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" type="button" aria-label="Giỏ hàng" data-cart-open>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+            <circle cx="10" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle>
+          </svg>
+          <span class="badge" data-cart-count>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Mở menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================== PAGE HERO ============================ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="page-tag">Thanh toán</p>
+        <h1>Thanh toán đơn hàng</h1>
+        <p class="page-sub">Điền thông tin nhận hàng, chọn cách thanh toán rồi bấm xác nhận. Đơn hàng chỉ mang tính demo.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container checkout">
+        <div class="checkout-main">
+          <div class="checkout-empty" data-checkout-empty hidden>
+            <h2>Giỏ hàng đang trống</h2>
+            <p>Bạn chưa chọn sản phẩm nào. Xem danh sách phụ kiện rồi thêm vào giỏ nhé.</p>
+            <a class="btn btn-primary" href="san-pham.html">Xem sản phẩm</a>
+          </div>
+
+          <form class="checkout-form" data-checkout-form novalidate>
+            <h2>Thông tin nhận hàng</h2>
+
+            <div class="field-row">
+              <label class="field">
+                <span>Họ và tên *</span>
+                <input type="text" name="name" placeholder="Nguyễn Văn A" autocomplete="name" required>
+              </label>
+              <label class="field">
+                <span>Số điện thoại *</span>
+                <input type="tel" name="phone" placeholder="09xx xxx xxx" autocomplete="tel" required>
+              </label>
+            </div>
+
+            <div class="field-row">
+              <label class="field">
+                <span>Tỉnh / Thành phố *</span>
+                <select name="province" data-province required>
+                  <option value="">Đang tải danh sách…</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Phường / Xã *</span>
+                <select name="ward" data-ward required disabled>
+                  <option value="">Chọn tỉnh/thành trước</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Địa chỉ cụ thể *</span>
+              <input type="text" name="address" placeholder="Số nhà, tên đường, toà nhà…" autocomplete="street-address" required>
+            </label>
+
+            <label class="field">
+              <span>Ghi chú cho người giao hàng</span>
+              <textarea name="note" rows="3" placeholder="Ví dụ: gọi trước khi tới, giao giờ hành chính…"></textarea>
+            </label>
+
+            <h2 class="pay-title">Phương thức thanh toán</h2>
+
+            <div class="pay-list">
+              <label class="pay-option">
+                <input type="radio" name="payment" value="cod" checked>
+                <span class="pay-box">
+                  <span class="pay-ico">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2.5" y="6" width="19" height="12" rx="2.5"></rect><circle cx="12" cy="12" r="2.6"></circle><path d="M6 12h.01M18 12h.01"></path>
+                    </svg>
+                  </span>
+                  <span class="pay-text">
+                    <strong>Chuyển tiền khi nhận hàng</strong>
+                    <span>Kiểm tra hàng rồi trả tiền mặt cho shipper (COD).</span>
+                  </span>
+                </span>
+              </label>
+
+              <label class="pay-option">
+                <input type="radio" name="payment" value="bank">
+                <span class="pay-box">
+                  <span class="pay-ico">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 9.5 12 4l9 5.5"></path><path d="M5 10v9h14v-9"></path><path d="M3 19h18"></path><path d="M9.5 19v-5h5v5"></path>
+                    </svg>
+                  </span>
+                  <span class="pay-text">
+                    <strong>Chuyển khoản qua thẻ ngân hàng</strong>
+                    <span>Chuyển trước rồi bấm xác nhận, đơn được đóng gói ngay.</span>
+                  </span>
+                </span>
+              </label>
+
+              <label class="pay-option">
+                <input type="radio" name="payment" value="momo">
+                <span class="pay-box">
+                  <span class="pay-ico">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="5" y="2.5" width="14" height="19" rx="3"></rect><path d="M9 6.5h6"></path><circle cx="12" cy="13" r="2.5"></circle><path d="M10 18h4"></path>
+                    </svg>
+                  </span>
+                  <span class="pay-text">
+                    <strong>Chuyển khoản qua Momo</strong>
+                    <span>Chuyển tới số ví Momo của cửa hàng.</span>
+                  </span>
+                </span>
+              </label>
+            </div>
+
+            <div class="pay-detail" data-pay-detail="cod">
+              <p>Shipper thu tiền khi giao. Vui lòng chuẩn bị đủ số tiền của đơn hàng, phí giao hàng đang miễn phí.</p>
+            </div>
+
+            <div class="pay-detail" data-pay-detail="bank" hidden>
+              <div class="pay-qr">
+                <img src="images/qr-bank.svg" alt="Mã QR chuyển khoản ngân hàng" width="180" height="180">
+                <div class="pay-qr-info">
+                  <p><b>Ngân hàng:</b> Vietcombank — CN Hà Nội</p>
+                  <p><b>Số tài khoản:</b> 0123 456 789</p>
+                  <p><b>Chủ tài khoản:</b> CONG TY TNHH AKENXI</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pay-detail" data-pay-detail="momo" hidden>
+              <div class="pay-qr">
+                <img src="images/qr-momo.svg" alt="Mã QR ví Momo" width="180" height="180">
+                <div class="pay-qr-info">
+                  <p><b>Ví Momo:</b> 0912 345 678</p>
+                  <p><b>Tên ví:</b> AKENXI STORE</p>
+                </div>
+              </div>
+            </div>
+
+            <label class="pay-confirm" data-pay-confirm hidden>
+              <input type="checkbox" name="paid">
+              <span>Tôi đã thanh toán</span>
+            </label>
+
+            <p class="form-error" data-error hidden></p>
+
+            <button class="btn btn-primary checkout-submit" type="submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 12.5l5 5L20 6.5"></path>
+              </svg>
+              Xác nhận
+            </button>
+          </form>
+
+          <div class="checkout-done" data-checkout-done hidden>
+            <div class="done-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12.5l5 5L20 6.5"></path>
+              </svg>
+            </div>
+            <h2>Đã ghi nhận thanh toán</h2>
+            <p class="done-sub">Cảm ơn bạn. Akenxi sẽ gọi xác nhận trong 30 phút giờ hành chính.</p>
+            <dl class="done-info" data-done-info></dl>
+            <div class="done-actions">
+              <a class="btn btn-primary" href="san-pham.html">Tiếp tục mua hàng</a>
+              <a class="btn btn-ghost" href="index.html">Về trang chủ</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="checkout-summary" data-checkout-summary>
+          <h2>Đơn hàng</h2>
+          <div class="order-items" data-order-items></div>
+          <dl class="order-total">
+            <div><dt>Tạm tính</dt><dd data-order-subtotal>0₫</dd></div>
+            <div><dt>Phí giao hàng</dt><dd class="free">Miễn phí</dd></div>
+            <div class="grand"><dt>Tổng cộng</dt><dd data-order-grand>0₫</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+<footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">
+          <img class="logo-img" src="images/logo.png" alt="Akenxi" width="270" height="120">
+        </a>
+        <p>Cửa hàng phụ kiện điện thoại chính hãng — 6 chi nhánh tại Hà Nội, TP.HCM, Đà Nẵng.</p>
+        <p class="footer-hotline">Hotline: <b>1900 6868</b></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sản phẩm</h4>
+        <ul>
+          <li><a href="san-pham.html">Tai nghe</a></li>
+          <li><a href="san-pham.html">Sạc &amp; Cáp</a></li>
+          <li><a href="san-pham.html">Ốp lưng</a></li>
+          <li><a href="san-pham.html">Pin dự phòng</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="lien-he.html">Chính sách bảo hành</a></li>
+          <li><a href="lien-he.html">Đổi trả 30 ngày</a></li>
+          <li><a href="lien-he.html">Vận chuyển</a></li>
+          <li><a href="lien-he.html">Câu hỏi thường gặp</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Cửa hàng</h4>
+        <ul>
+          <li>128 Thái Hà, Đống Đa, Hà Nội</li>
+          <li>45 Nguyễn Huệ, Q.1, TP.HCM</li>
+          <li>210 Nguyễn Văn Linh, Đà Nẵng</li>
+          <li>08:30 – 21:30 mỗi ngày</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Akenxi. Website demo — sản phẩm và số liệu chỉ mang tính minh hoạ.</p>
+      <ul class="footer-legal">
+        <li><a href="lien-he.html">Điều khoản</a></li>
+        <li><a href="lien-he.html">Bảo mật</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Liên hệ nhanh cố định góc phải -->
+  <div class="quick-contact" aria-label="Liên hệ nhanh">
+    <a class="qc-btn qc-zalo" href="https://zalo.me/1900686868" target="_blank" rel="noopener" title="Chat Zalo">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <path fill="#fff" d="M24 7C13.6 7 5.2 14 5.2 22.6c0 4.9 2.7 9.3 7 12.2-.3 2-1.1 4-2.4 5.7-.5.7.2 1.6 1 1.3 3.3-1.1 6-2.6 7.9-4 1.6.4 3.4.6 5.3.6 10.4 0 18.8-7 18.8-15.8S34.4 7 24 7z"/>
+          <text x="24" y="27.5" text-anchor="middle" font-family="__SvnMontFont_81fb87, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#0068ff">Zalo</text>
+        </svg>
+      </span>
+      <span class="qc-label">Zalo</span>
+    </a>
+    <a class="qc-btn qc-phone" href="tel:19006868" title="Gọi 1900 6868">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v2.5a2.5 2.5 0 0 1-2.7 2.5A17 17 0 0 1 4 5.7 2.5 2.5 0 0 1 6.5 3H9l1.5 4.5-2 1.5a12.5 12.5 0 0 0 6.5 6.5l1.5-2z"></path>
+        </svg>
+      </span>
+      <span class="qc-label">1900 6868</span>
+    </a>
+    <a class="qc-btn qc-mess" href="https://m.me/akenxi" target="_blank" rel="noopener" title="Chat Messenger">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.2c-5.4 0-9.8 4-9.8 9 0 2.8 1.4 5.3 3.6 6.9v3.7l3.4-1.9c.9.2 1.8.4 2.8.4 5.4 0 9.8-4 9.8-9s-4.4-9.1-9.8-9.1zm.6 12-2.5-2.6-4.7 2.6 5.2-5.5 2.5 2.5 4.6-2.5-5.1 5.5z"></path>
+        </svg>
+      </span>
+      <span class="qc-label">Messenger</span>
+    </a>
+  </div>
+
+  <!-- Giỏ hàng -->
+  <div class="cart-overlay" data-cart-overlay hidden></div>
+
+  <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng" aria-hidden="true" hidden>
+    <div class="cart-head">
+      <h2>Giỏ hàng <span class="cart-head-count" data-cart-count>0</span></h2>
+      <button class="cart-close" type="button" data-cart-close aria-label="Đóng giỏ hàng">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-body" data-cart-items></div>
+
+    <div class="cart-foot">
+      <div class="cart-total"><span>Tổng tiền</span><strong data-cart-total>0₫</strong></div>
+      <button class="btn btn-primary" type="button" data-cart-checkout>Thanh toán</button>
+      <p class="cart-note">Demo — chưa gắn cổng thanh toán.</p>
+    </div>
+  </aside>
+
+  <div class="toast" data-toast hidden></div>
+
+  <script src="js/ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/checkout.js" defer></script>
+</body>
+</html>

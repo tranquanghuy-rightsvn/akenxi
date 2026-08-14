@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liên hệ — Akenxi</title>
+<meta name="description" content="Liên hệ Akenxi: hotline 1900 6868, email cskh@akenxi.vn, 6 chi nhánh tại Hà Nội, TP.HCM và Đà Nẵng.">
+<link rel="icon" type="image/png" sizes="64x64" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img class="logo-img" src="images/logo.png" alt="Akenxi" width="270" height="120">
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Menu chính">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="san-pham.html">Sản phẩm</a></li>
+          <li><a href="ve-chung-toi.html">Về chúng tôi</a></li>
+          <li><a href="tin-tuc.html">Tin tức</a></li>
+          <li><a href="lien-he.html" class="is-active" aria-current="page">Liên hệ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" type="button" aria-label="Tìm kiếm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" type="button" aria-label="Giỏ hàng" data-cart-open>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
+            <circle cx="10" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle>
+          </svg>
+          <span class="badge" data-cart-count>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Mở menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================== PAGE HERO ============================ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="page-tag">Liên hệ</p>
+        <h1>Liên hệ với Akenxi</h1>
+        <p class="page-sub">Gọi hotline 1900 6868 hoặc để lại thông tin, nhân viên gọi lại trong 30 phút giờ hành chính.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid">
+        <form class="contact-form reveal" onsubmit="return false">
+          <h2>Gửi yêu cầu tư vấn</h2>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Họ và tên</span>
+              <input type="text" name="name" placeholder="Nguyễn Văn A" required>
+            </label>
+            <label class="field">
+              <span>Số điện thoại</span>
+              <input type="tel" name="phone" placeholder="09xx xxx xxx" required>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Dòng điện thoại đang dùng</span>
+            <input type="text" name="device" placeholder="iPhone 15 Pro, Galaxy S24…">
+          </label>
+
+          <label class="field">
+            <span>Bạn cần tư vấn gì?</span>
+            <textarea name="message" rows="5" placeholder="Ví dụ: cần tai nghe chống ồn dưới 2 triệu, hay đi xe bus."></textarea>
+          </label>
+
+          <button class="btn btn-primary" type="submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 12.5 20 5l-7 15-2.5-6z"></path>
+            </svg>
+            Gửi yêu cầu
+          </button>
+          <p class="form-note">Form demo — chưa gắn backend nên dữ liệu không được gửi đi.</p>
+        </form>
+
+        <div class="contact-info reveal">
+          <div class="info-card">
+            <h3>Hotline</h3>
+            <p class="info-big">1900 6868</p>
+            <p>08:30 – 21:30 mỗi ngày, kể cả cuối tuần</p>
+          </div>
+          <div class="info-card">
+            <h3>Email</h3>
+            <p class="info-big">cskh@akenxi.vn</p>
+            <p>Phản hồi trong vòng 1 ngày làm việc</p>
+          </div>
+          <div class="info-card">
+            <h3>Cửa hàng chính</h3>
+            <p>128 Thái Hà, Đống Đa, Hà Nội</p>
+            <p>45 Nguyễn Huệ, Quận 1, TP.HCM</p>
+            <p>210 Nguyễn Văn Linh, Hải Châu, Đà Nẵng</p>
+          </div>
+          <div class="info-card">
+            <h3>Bảo hành</h3>
+            <p>Mang sản phẩm và hoá đơn tới bất kỳ chi nhánh.</p>
+            <p>Đổi mới trong 30 ngày nếu lỗi nhà sản xuất.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+<footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">
+          <img class="logo-img" src="images/logo.png" alt="Akenxi" width="270" height="120">
+        </a>
+        <p>Cửa hàng phụ kiện điện thoại chính hãng — 6 chi nhánh tại Hà Nội, TP.HCM, Đà Nẵng.</p>
+        <p class="footer-hotline">Hotline: <b>1900 6868</b></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sản phẩm</h4>
+        <ul>
+          <li><a href="san-pham.html">Tai nghe</a></li>
+          <li><a href="san-pham.html">Sạc &amp; Cáp</a></li>
+          <li><a href="san-pham.html">Ốp lưng</a></li>
+          <li><a href="san-pham.html">Pin dự phòng</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="lien-he.html">Chính sách bảo hành</a></li>
+          <li><a href="lien-he.html">Đổi trả 30 ngày</a></li>
+          <li><a href="lien-he.html">Vận chuyển</a></li>
+          <li><a href="lien-he.html">Câu hỏi thường gặp</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Cửa hàng</h4>
+        <ul>
+          <li>128 Thái Hà, Đống Đa, Hà Nội</li>
+          <li>45 Nguyễn Huệ, Q.1, TP.HCM</li>
+          <li>210 Nguyễn Văn Linh, Đà Nẵng</li>
+          <li>08:30 – 21:30 mỗi ngày</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Akenxi. Website demo — sản phẩm và số liệu chỉ mang tính minh hoạ.</p>
+      <ul class="footer-legal">
+        <li><a href="lien-he.html">Điều khoản</a></li>
+        <li><a href="lien-he.html">Bảo mật</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Liên hệ nhanh cố định góc phải -->
+  <div class="quick-contact" aria-label="Liên hệ nhanh">
+    <a class="qc-btn qc-zalo" href="https://zalo.me/1900686868" target="_blank" rel="noopener" title="Chat Zalo">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <path fill="#fff" d="M24 7C13.6 7 5.2 14 5.2 22.6c0 4.9 2.7 9.3 7 12.2-.3 2-1.1 4-2.4 5.7-.5.7.2 1.6 1 1.3 3.3-1.1 6-2.6 7.9-4 1.6.4 3.4.6 5.3.6 10.4 0 18.8-7 18.8-15.8S34.4 7 24 7z"/>
+          <text x="24" y="27.5" text-anchor="middle" font-family="__SvnMontFont_81fb87, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#0068ff">Zalo</text>
+        </svg>
+      </span>
+      <span class="qc-label">Zalo</span>
+    </a>
+    <a class="qc-btn qc-phone" href="tel:19006868" title="Gọi 1900 6868">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v2.5a2.5 2.5 0 0 1-2.7 2.5A17 17 0 0 1 4 5.7 2.5 2.5 0 0 1 6.5 3H9l1.5 4.5-2 1.5a12.5 12.5 0 0 0 6.5 6.5l1.5-2z"></path>
+        </svg>
+      </span>
+      <span class="qc-label">1900 6868</span>
+    </a>
+    <a class="qc-btn qc-mess" href="https://m.me/akenxi" target="_blank" rel="noopener" title="Chat Messenger">
+      <span class="qc-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.2c-5.4 0-9.8 4-9.8 9 0 2.8 1.4 5.3 3.6 6.9v3.7l3.4-1.9c.9.2 1.8.4 2.8.4 5.4 0 9.8-4 9.8-9s-4.4-9.1-9.8-9.1zm.6 12-2.5-2.6-4.7 2.6 5.2-5.5 2.5 2.5 4.6-2.5-5.1 5.5z"></path>
+        </svg>
+      </span>
+      <span class="qc-label">Messenger</span>
+    </a>
+  </div>
+
+  <!-- Giỏ hàng -->
+  <div class="cart-overlay" data-cart-overlay hidden></div>
+
+  <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng" aria-hidden="true" hidden>
+    <div class="cart-head">
+      <h2>Giỏ hàng <span class="cart-head-count" data-cart-count>0</span></h2>
+      <button class="cart-close" type="button" data-cart-close aria-label="Đóng giỏ hàng">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-body" data-cart-items></div>
+
+    <div class="cart-foot">
+      <div class="cart-total"><span>Tổng tiền</span><strong data-cart-total>0₫</strong></div>
+      <button class="btn btn-primary" type="button" data-cart-checkout>Thanh toán</button>
+      <p class="cart-note">Demo — chưa gắn cổng thanh toán.</p>
+    </div>
+  </aside>
+
+  <div class="toast" data-toast hidden></div>
+
+  <script src="js/ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</body>
+</html>
