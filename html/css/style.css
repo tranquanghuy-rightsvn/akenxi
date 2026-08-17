@@ -140,7 +140,7 @@ svg { width: 100%; height: 100%; }
 /* Logo — wordmark AKENXI chính thức (SVG), không redraw bằng font */
 .logo { display: flex; align-items: center; flex-shrink: 0; }
 
-.logo-img { height: 26px; width: auto; }
+.logo-img { height: 42px; width: auto; }  /* logo Akenxi đã bỏ nền, crop sát viền */
 
 /* Nav */
 .main-nav { margin-left: auto; }
@@ -205,9 +205,8 @@ svg { width: 100%; height: 100%; }
 .nav-toggle.is-open span:nth-child(2) { opacity: 0; }
 .nav-toggle.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-/* ================================= Hero =================================
-   Hệ thống campaign: mỗi hero là 1 object trong HERO_CAMPAIGNS (js/hero.js).
-   Đổi campaign mới = đổi data + ảnh, không phải sửa CSS/markup.
+/* ================================= Hero ==================================
+   Hero 3D — tai nghe Headphone.glb xoay theo scroll (js/main.js).
    ========================================================================== */
 
 .display {
@@ -219,116 +218,57 @@ svg { width: 100%; height: 100%; }
 }
 
 .hero {
-  position: relative;
-  margin-top: var(--header-h);
-  height: clamp(440px, 82vh, 780px);
-  overflow: hidden;
-  background: #111827;
+  padding: calc(var(--header-h) + clamp(28px, 4vw, 56px)) 0 clamp(36px, 5vw, 64px);
+  background: #fff;
 }
 
-.hero-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .7s ease;
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 48px);
 }
 
-.hero-slide.is-active { opacity: 1; visibility: visible; }
-
-.hero-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  transform: scale(1.02);
-  transition: transform 7s ease-out;
-}
-
-.hero-slide.is-active img { transform: scale(1.08); }
-
-.hero-slide::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(10, 14, 20, .72) 0%, rgba(10, 14, 20, .32) 45%, rgba(10, 14, 20, .08) 70%);
-}
-
-.hero-copy {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+.hero-eyebrow {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #fff;
-  pointer-events: none;
-}
-
-.hero-copy .container { pointer-events: auto; }
-
-.hero-tag {
-  display: inline-flex;
-  width: max-content;
-  margin-bottom: 16px;
-  padding: 5px 13px;
-  border: 1px solid rgba(255, 255, 255, .35);
-  border-radius: 999px;
-  font-size: 12.5px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 15.5px;
   font-weight: 600;
-  letter-spacing: .4px;
-  text-transform: uppercase;
+  letter-spacing: .2px;
+  color: var(--accent);
 }
 
-.hero-copy .display {
-  max-width: 14em;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, .25);
+.hero-eyebrow svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.hero-copy h1 {
+  font-size: clamp(30px, 3.9vw, 50px);
+  line-height: 1.14;
+  letter-spacing: -1px;
+  font-weight: 800;
+  max-width: 15em;
 }
 
 .hero-sub {
-  margin-top: 14px;
-  max-width: 30ch;
-  font-size: clamp(15px, 1.5vw, 18.5px);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, .82);
-  text-shadow: 0 2px 16px rgba(0, 0, 0, .2);
+  margin-top: 12px;
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.45;
+  color: #374151;
 }
 
-.hero-cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-  margin-top: clamp(22px, 3vw, 32px);
-}
+.hero-copy .btn { margin-top: clamp(24px, 3vw, 36px); }
 
-.hero-cta-row .btn {
-  margin-top: 0;
-  width: max-content;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  font-size: 14.5px;
-}
+/* Text hero chạy vào từ bên trái khi tải trang */
+.hero-copy > * { animation: hero-in .7s cubic-bezier(.22, .7, .25, 1) both; }
+.hero-eyebrow { animation-delay: .05s; }
+.hero-copy h1 { animation-delay: .16s; }
+.hero-sub { animation-delay: .28s; }
+.hero-copy .btn { animation-delay: .4s; }
 
-/* Waveform trang trí rất nhẹ, chỉ dùng cho campaign Audio */
-.hero-waveform {
-  position: absolute;
-  right: clamp(24px, 6vw, 96px);
-  bottom: clamp(90px, 14vh, 140px);
-  z-index: 1;
-  display: flex;
-  align-items: flex-end;
-  gap: 5px;
-  height: 64px;
-  opacity: .28;
-  pointer-events: none;
-}
-
-.hero-waveform span {
-  display: block;
-  width: 4px;
-  border-radius: 999px;
-  background: #fff;
+@keyframes hero-in {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: none; }
 }
 
 /* Buttons */
@@ -351,34 +291,159 @@ svg { width: 100%; height: 100%; }
 .btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent-dark); }
 
-.btn-outline {
-  background: transparent;
-  color: #fff;
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7);
+/* ============================== Hero visual ============================== */
+
+.hero-visual { position: relative; }
+
+.model-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 470px;
+  aspect-ratio: 1 / 1;
+  max-height: 60vh;
+  margin-inline: auto;
 }
 
-.btn-outline:hover { box-shadow: inset 0 0 0 1.5px #fff; background: rgba(255, 255, 255, .08); }
-
-.hero-dots {
+/* Sàn kẻ ô phối cảnh: các đường chạy từ trước ra sau, tan dần vào nền trắng */
+.model-floor {
   position: absolute;
   left: 50%;
-  bottom: clamp(18px, 3vw, 30px);
-  z-index: 3;
-  display: flex;
-  gap: 9px;
+  bottom: -7%;
+  width: 138%;
+  height: 54%;
   transform: translateX(-50%);
+  perspective: 420px;
+  perspective-origin: 50% 0%;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.hero-dot {
-  width: 26px; height: 3px;
+.model-floor span {
+  position: absolute;
+  inset: 0 0 0 0;
+  transform: rotateX(64deg);
+  transform-origin: 50% 100%;
+  background-image:
+    repeating-linear-gradient(to right, rgba(17, 24, 39, .22) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(to bottom, rgba(17, 24, 39, .22) 0 1px, transparent 1px 48px);
+  background-position: center bottom;
+  mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .55) 45%, transparent 88%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .55) 45%, transparent 88%);
+}
+
+/* Bóng mờ dưới tai nghe: 2 lớp CSS, không dùng shadow map */
+.model-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: 50%;
+  height: 8%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: shadow-breathe 4.2s ease-in-out infinite;
+}
+
+.model-shadow::before {
+  content: "";
+  position: absolute;
+  left: 16%; right: 16%; top: 20%; bottom: 14%;
+  border-radius: 50%;
+  background: rgba(17, 24, 39, .42);
+  filter: blur(8px);
+}
+
+.model-shadow::after {
+  content: "";
+  position: absolute;
+  inset: -55% -18%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(17, 24, 39, .22), rgba(17, 24, 39, .08) 48%, transparent 74%);
+  filter: blur(18px);
+}
+
+@keyframes shadow-breathe {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: .95; }
+  50% { transform: translateX(-50%) scale(1.07); opacity: .72; }
+}
+
+#headphoneCanvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+#headphoneCanvas:active { cursor: grabbing; }
+
+.model-loader {
+  position: absolute;
+  inset: auto 0 42%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: opacity .4s ease;
+}
+
+.model-loader.is-hidden { opacity: 0; pointer-events: none; }
+
+.model-loader .bar { width: 160px; height: 3px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.model-loader .bar i { display: block; width: 0; height: 100%; background: var(--accent); transition: width .25s ease; }
+
+/* ---------------- 4 badge cam kết nổi quanh mô hình 3D ------------------- */
+
+.hero-badges { position: absolute; inset: 0; pointer-events: none; }
+
+.hero-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 46%;
+  padding: 9px 14px 9px 10px;
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .4);
-  cursor: pointer;
-  transition: background .2s ease;
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 8px 22px -14px rgba(17, 24, 39, .35);
+  animation: badge-float 6s ease-in-out infinite;
 }
 
-.hero-dot.is-active { background: #fff; }
-.hero-dot:hover { background: rgba(255, 255, 255, .7); }
+.hb-ico {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  padding: 7px;
+  border-radius: 50%;
+  background: rgba(0, 127, 102, .08);
+  color: var(--accent);
+}
+
+.hb-text { display: flex; flex-direction: column; line-height: 1.3; }
+.hb-text strong { font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.hb-text span { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+/* 4 góc, mỗi góc một độ cao khác nhau */
+.b-tl { top: 2%;  left: -4%; }
+.b-tr { top: 15%; right: -6%; }
+.b-bl { bottom: 22%; left: -7%; }
+.b-br { bottom: 5%;  right: -3%; }
+
+/* trôi nhẹ, lệch pha để không cùng nhịp */
+.b-tl { animation-delay: 0s; }
+.b-tr { animation-delay: -1.5s; }
+.b-bl { animation-delay: -3s; }
+.b-br { animation-delay: -4.5s; }
+
+@keyframes badge-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
 
 /* ================================ Sections =============================== */
 
@@ -1595,8 +1660,13 @@ svg { width: 100%; height: 100%; }
   .post-grid,
   .branch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  .hero { height: clamp(420px, 74vh, 640px); }
-  .hero-waveform { display: none; }
+  .hero-inner { grid-template-columns: 1fr; gap: clamp(16px, 3vw, 28px); }
+  .hero-copy { text-align: center; }        /* tai nghe xuống dưới phần chữ */
+  .hero-copy h1 { margin-inline: auto; }
+  .hero-eyebrow { justify-content: center; }
+
+  .model-wrap { max-width: 400px; max-height: 42vh; }
+  .model-floor { width: 118%; height: 40%; }
 
   .cat-grid-big,
   .tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1629,10 +1699,9 @@ svg { width: 100%; height: 100%; }
 }
 
 @media (max-width: 600px) {
-  .logo-img { height: 22px; }
-  .icon-btn[aria-label="Tài khoản"] { display: none; }  /* mobile: chỉ Logo + Search + Cart + Menu */
+  .logo-img { height: 34px; }
 
-  .hero { height: clamp(380px, 78vh, 560px); }
+  .model-wrap { max-width: 320px; max-height: 36vh; }
   .hero-copy .btn { min-width: 200px; }  /* giữ dáng pill, không kéo full chiều ngang */
 
   .post-grid,
@@ -1672,10 +1741,33 @@ svg { width: 100%; height: 100%; }
   .prod-grid, .cat-grid-big, .tech-grid { grid-template-columns: 1fr; }
 }
 
+/* Badge: dưới 980px thì thôi nổi, xếp lưới 2 cột dưới mô hình */
+@media (max-width: 980px) {
+  .hero-badges {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+    pointer-events: auto;
+  }
+
+  .hero-badge {
+    position: static;
+    max-width: none;
+    justify-content: flex-start;
+    border-radius: var(--radius);
+    animation: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-badges { grid-template-columns: 1fr; }
+  .hero-badge { padding: 8px 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .hero-slide img,
-  .hero-slide.is-active img { transition: none; transform: none; }
 }
