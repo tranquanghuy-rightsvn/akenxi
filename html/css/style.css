@@ -140,7 +140,7 @@ svg { width: 100%; height: 100%; }
 /* Logo — wordmark AKENXI chính thức (SVG), không redraw bằng font */
 .logo { display: flex; align-items: center; flex-shrink: 0; }
 
-.logo-img { height: 42px; width: auto; }  /* logo Akenxi đã bỏ nền, crop sát viền */
+.logo-img { height: 90px; width: auto; }  /* logo Akenxi đã bỏ nền, crop sát viền */
 
 /* Nav */
 .main-nav { margin-left: auto; }
@@ -707,18 +707,21 @@ svg { width: 100%; height: 100%; }
 .showcase-media {
   aspect-ratio: 5 / 4;
   overflow: hidden;
+  padding: 2%;
+  display: grid;
+  place-items: center;
   border-radius: var(--radius);
-  background: var(--bg-soft);
+  background: #fdfdfd;
 }
 
 .showcase-media img {
-  width: 100%;
+  width: 63%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;   /* ảnh sản phẩm dọc — contain để thấy trọn sản phẩm, không crop/zoom quá gần */
   transition: transform .5s ease;
 }
 
-.showcase-media:hover img { transform: scale(1.04); }
+.showcase-media:hover img { transform: scale(1.05); }
 
 .showcase-tag { font-size: 13.5px; font-weight: 700; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; }
 .showcase-copy .display { margin-top: 12px; }
@@ -1699,7 +1702,7 @@ svg { width: 100%; height: 100%; }
 }
 
 @media (max-width: 600px) {
-  .logo-img { height: 34px; }
+  .logo-img { height: 38px; }
 
   .model-wrap { max-width: 320px; max-height: 36vh; }
   .hero-copy .btn { min-width: 200px; }  /* giữ dáng pill, không kéo full chiều ngang */
