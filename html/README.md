@@ -1,15 +1,12 @@
 # Akenxi — demo web bán phụ kiện điện thoại
 
-Trang tĩnh HTML/CSS/JS thuần, giao diện trắng phẳng tối giản (không gradient, không nền caro).
-Hero theo mẫu `hero-text.png`: dòng nhỏ "Giao hàng toàn quốc" màu nhấn kèm icon xe →
-tiêu đề đen đậm → phụ đề → nút pill **Mua ngay**; text chạy vào từ bên trái khi tải trang.
-Bên phải là mô hình 3D `Headphone.glb`:
-tai nghe **màu đen, dựng đứng, mặc định nghiêng 30°** quanh trục thẳng đứng (góc 3/4, không chính diện).
-Trang cuộn bình thường — cuộn tới đâu tai nghe xoay tới đó; kéo chuột trên mô hình để xoay tay.
+Trang tĩnh HTML/CSS/JS thuần, giao diện premium-tech tối giản: ảnh sản phẩm lớn,
+nhiều khoảng trắng, chuyển động tiết chế (fade/zoom nhẹ, không xoay/glitch).
+Hero trang chủ là **hệ thống campaign đổi được**: 4 slide cross-fade tự động
+(Brand/Audio/Charging/New Product), đổi campaign mới chỉ cần sửa data + ảnh trong
+`js/hero.js`, không phải sửa CSS/markup — xem mục "Hero campaign" bên dưới.
 
 ## Chạy
-
-Cần HTTP server (ES modules + fetch `.glb` không chạy với `file://`):
 
 ```bash
 cd html
@@ -22,29 +19,49 @@ python3 -m http.server 8917
 Website nhiều trang (mỗi mục menu là một file HTML riêng, không phải anchor cùng trang):
 
 ```
-index.html                     Trang chủ: hero 3D + danh mục + bán chạy + đánh giá + nhận tin
-san-pham.html                  Sản phẩm: page hero + bộ lọc + 8 sản phẩm
+index.html                     Trang chủ: hero campaign + danh mục + showcase + bán chạy +
+                                technology + brand story + mosaic + đánh giá + nhận tin
+san-pham.html                  Sản phẩm: page hero + bộ lọc + 12 sản phẩm
+san-pham-chi-tiet.html         Trang chi tiết mẫu: ảnh lớn + USP + CTA + Highlights + Technologys
 ve-chung-toi.html              Về chúng tôi: câu chuyện + số liệu + ưu điểm + 6 chi nhánh
 tin-tuc.html                   Tin tức: 6 bài viết
 lien-he.html                   Liên hệ: form tư vấn + hotline/email/địa chỉ
 thanh-toan.html                Thanh toán: thông tin nhận hàng + phương thức + xác nhận
 css/style.css                  Design token, layout, responsive
+js/hero.js                     Hero campaign: mảng HERO_CAMPAIGNS + carousel cross-fade
 js/cart.js                     Giỏ hàng: thêm/xoá/số lượng, localStorage, drawer + toast
 js/checkout.js                 Thanh toán: tỉnh/phường, phương thức, xác nhận, xoá giỏ
 area/provinces.json            34 tỉnh/thành (rút gọn từ xevip/html/area/provinces.json)
 area/wards/<mã tỉnh>.json      Phường/xã theo tỉnh, tải khi chọn tỉnh (3.321 phường/xã)
-images/products/*.webp         12 ảnh sản phẩm (tham khảo từ baseus.vn, đã resize/nén)
-images/categories/*.webp       6 ảnh danh mục, crop vuông 360×360
+images/products/*.webp         Ảnh sản phẩm demo cũ (tham khảo từ baseus.vn) — vẫn dùng làm
+                                placeholder cho các mục chưa có ảnh AKENXI thật (Power, Mobile)
+images/products/akenxi_*/      Ảnh chụp sản phẩm AKENXI thật, 1 thư mục / sản phẩm
+images/office/*.jpg            Ảnh showroom/văn phòng AKENXI — dùng cho brand story + mosaic
+images/speaker_product/*.jpg   Ảnh loa karaoke AKENXI — dùng cho category Accessories
+images/akenxi-icon-green.svg,
+images/akenxi-icon-white.svg,
+images/akenxi-icon-black.svg   Icon AKENXI (mark tròn), 3 biến thể màu — dùng làm favicon +
+                                mọi chỗ cần logo dạng vuông/nhỏ trên nền khác nhau
+images/akenxi-signature-green.svg,
+images/akenxi-signature-white.svg,
+images/akenxi-signature-black.svg   Logo AKENXI chính thức (icon + wordmark), 3 biến thể màu —
+                                dùng trong header/footer, chọn theo nền sáng/tối
 images/qr-bank.svg, qr-momo.svg   Mã QR giả (SVG tự sinh) cho 2 cách chuyển khoản
-js/main.js                     three.js: load GLB, vật liệu đen, ánh sáng, xoay theo scroll
 js/ui.js                       Menu mobile, reveal khi cuộn, highlight menu theo section
-js/vendor/three/               three.js r169 (local, không CDN)
 fonts/inter-*.woff2            Inter (latin / latin-ext / vietnamese)
-images/logo.png                Logo Akenxi đã bỏ nền trắng + crop sát viền (270×120)
-images/logo-full.png           Bản full-res đã bỏ nền (991×440) để dùng lại khi cần
-images/favicon.png             Favicon 64×64 cắt từ khối hình của logo
-models/Headphone.glb           Mô hình tai nghe
+js/main.js, js/vendor/three/,
+models/Headphone.glb           Hero 3D cũ — KHÔNG còn được trang nào tham chiếu (đã thay bằng
+                                hero campaign ảnh tĩnh), giữ lại trên đĩa phòng khi cần dùng lại
 ```
+
+## Hero campaign
+
+Trang chủ dùng carousel cross-fade 4 campaign, tự chuyển slide mỗi ~6 giây (dừng khi
+hover/focus, tắt hẳn autoplay nếu `prefers-reduced-motion`), có chấm điều hướng bên dưới.
+
+Để thêm/đổi campaign: sửa mảng `HERO_CAMPAIGNS` trong [`js/hero.js`](js/hero.js) — mỗi phần tử
+gồm `tag` (nhãn nhỏ), `headline` (tiêu đề lớn, hỗ trợ `<br>`), `image`, `alt`, và tuỳ chọn
+`ctaText`/`ctaHref`. Không cần sửa CSS hay HTML.
 
 ## Giỏ hàng
 
@@ -80,44 +97,27 @@ Kéo chuột / vuốt ngón tay cũng trượt được (pointer events, nhả t
 
 ## Các section
 
-Hero (kèm 4 badge cam kết nổi quanh mô hình 3D) → danh mục (6) → sản phẩm bán chạy (4) → vì sao chọn Akenxi (4)
-→ đánh giá khách hàng (3) → đăng ký nhận tin → footer.
-Tên, giá và ảnh sản phẩm tham khảo từ baseus.vn cho giống thật — đây là tài sản của Baseus,
-chỉ dùng cho bản demo nội bộ, cần thay bằng ảnh/nội dung của bạn trước khi phát hành.
-Các số liệu khác (đánh giá, chi nhánh, bài viết) là nội dung minh hoạ.
-
-## Mô hình 3D
-
-- **Đứng tự nhiên:** trục cao của model gốc là Z nên bọc trong group quay `rotation.x = -90°`,
-  sau đó căn tâm + scale vừa khung.
-- **Góc mặc định:** `BASE_ROT_Y = -Math.PI / 6` (nghiêng 30°) — đổi dấu/giá trị hằng này để chỉnh góc và chiều quay.
-- **Màu đen:** `paintBlack()` clone vật liệu, gán màu/độ nhám theo tên bộ phận (đệm cao su nhám,
-  vòng đầu bán mờ, chi tiết còn lại hơi ánh kim) và tắt `transmission` của bản gốc.
-- **Ánh sáng trung tính** kiểu ảnh sản phẩm: key trên trước, fill dưới trái, rim sau — không đèn màu.
-- **Xoay theo scroll:** `progress = scrollY / innerHeight` → `rotation.y`, làm mượt bằng lerp mỗi frame.
-- **Sàn caro phối cảnh:** `.model-floor` — mặt phẳng CSS `rotateX(64deg)` trong `perspective: 420px`,
-  kẻ ô bằng 2 lớp `repeating-linear-gradient`, mask mờ dần về phía xa để tan vào nền trắng.
-- **Bóng mờ:** không dùng shadow map — `.model-shadow` gồm 2 lớp CSS (bóng tiếp xúc + bóng khuếch tán)
-  với animation "thở" khớp nhịp mô hình bay lơ lửng.
-- Render loop tạm dừng khi hero ra khỏi viewport, và tôn trọng `prefers-reduced-motion`.
+Hero campaign (4 slide) → danh mục lớn (6: Audio/Charging/Power/Cables/Mobile/Accessories) →
+showcase Audio → sản phẩm bán chạy (12) → showcase Charging → AKENXI Technology (4) →
+brand story → mosaic gallery (4 ảnh showroom) → đánh giá khách hàng (3) → đăng ký nhận tin → footer.
+Ảnh sản phẩm AKENXI thật nằm ở `images/products/akenxi_*/`; một số mục (Power, Mobile,
+đánh giá, chi nhánh, bài viết) vẫn là ảnh/nội dung minh hoạ do chưa có hàng/số liệu thật —
+xem bảng mapping ảnh trong plan hoặc thay trực tiếp trong `index.html`/`js/hero.js`.
 
 ## Tinh chỉnh nhanh
 
 | Muốn đổi | Sửa ở |
 | --- | --- |
-| Góc mặc định của tai nghe | `BASE_ROT_Y` trong `js/main.js` |
-| Độ xoay khi cuộn | `SPIN_PER_VIEWPORT` trong `js/main.js` |
-| Độ cao mô hình (chỗ chừa cho bóng) | `BASE_Y` trong `js/main.js` |
-| Kích thước mô hình | hằng `2.45` trong `const scale = 2.45 / …` |
-| Độ đậm bóng mờ | `.model-shadow::before` / `::after` |
-| Màu thương hiệu / màu giá | `--accent` (lấy từ logo: `#03624f`), `--price` |
-| Vị trí 4 badge quanh tai nghe | `.b-tl` / `.b-tr` / `.b-bl` / `.b-br` trong `css/style.css` |
-| Hiệu ứng text hero chạy vào | `@keyframes hero-in` + các `animation-delay` trong `css/style.css` |
+| Campaign hero (nội dung/ảnh) | mảng `HERO_CAMPAIGNS` trong `js/hero.js` |
+| Thời gian tự chuyển slide hero | `6000` (ms) trong `start()`, `js/hero.js` |
+| Màu thương hiệu / màu giá | `--accent` (lấy từ logo: `#03624f`), `--price` trong `css/style.css` |
+| Cỡ chữ tiêu đề lớn (hero/showcase/story) | class `.display` trong `css/style.css` |
 | Nút liên hệ nhanh (Zalo/phone/Messenger) | `.quick-contact` trong `css/style.css`, markup ở cuối mỗi trang |
-| Sàn caro 3D | `.model-floor` (perspective, rotateX, cỡ ô 48px) |
-| Sinh lại 5 trang từ template | script `build_pages.py` trong scratchpad của session |
-| Danh mục + ảnh danh mục | `CATEGORIES` trong `build_pages.py` + `images/categories/` |
-| Mã QR chuyển khoản | thay `images/qr-bank.svg` / `qr-momo.svg` bằng QR thật |
-| Danh sách sản phẩm (tên/giá/ảnh) | `PRODUCTS` trong `build_pages.py`, rồi chạy lại script |
+| Danh mục lớn (ảnh/tên) | `.cat-grid-big` trong `index.html` |
+| Product showcase (spotlight) | `.showcase-row` trong `index.html` |
+| AKENXI Technology (4 pillar) | `.tech-grid` trong `index.html` (dùng lại ở `san-pham-chi-tiet.html`) |
+| Mosaic gallery | `.mosaic-grid` trong `index.html` + ảnh trong `images/office/` |
+| Trang chi tiết sản phẩm mẫu | `san-pham-chi-tiet.html` + `.pd-*` trong `css/style.css` |
+| Danh sách sản phẩm (tên/giá/ảnh) | các `<article class="prod-card">` trong `index.html` / `san-pham.html` |
 | Số item hiển thị của slider | `grid-auto-columns` của `.slider-track` trong từng media query |
-| Breakpoint responsive | cuối `css/style.css` (1120 / 980 / 820 / 600 / 360px) — từ 980px trở xuống tai nghe nằm dưới phần chữ; header giữ logo trái, tìm kiếm + giỏ hàng + ☰ bên phải ở mọi kích thước |
+| Breakpoint responsive | cuối `css/style.css` (1120 / 980 / 820 / 600 / 360px) |

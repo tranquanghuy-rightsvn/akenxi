@@ -164,4 +164,31 @@
     measure();
     apply();
   });
+
+  /* --------------- Parallax rất nhẹ trên ảnh brand story ------------------ */
+
+  var parallaxReduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var storyImg = document.querySelector(".story-media img");
+
+  if (storyImg && !parallaxReduceMotion) {
+    var ticking = false;
+
+    function applyParallax() {
+      var rect = storyImg.parentElement.getBoundingClientRect();
+      var mid = rect.top + rect.height / 2 - window.innerHeight / 2;
+      // dịch tối đa ~14px mỗi chiều — đủ để cảm nhận chiều sâu, không gây chóng mặt
+      var shift = Math.max(-14, Math.min(14, mid * -0.04));
+      storyImg.style.transform = "translateY(" + shift + "px) scale(1.08)";
+      ticking = false;
+    }
+
+    window.addEventListener("scroll", function () {
+      if (!ticking) {
+        window.requestAnimationFrame(applyParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    applyParallax();
+  }
 })();
