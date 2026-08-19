@@ -13,7 +13,7 @@ const loaderBar = document.getElementById("loaderBar");
 const loaderText = document.getElementById("loaderText");
 
 const SPIN_PER_VIEWPORT = Math.PI * 1.15; // góc xoay thêm mỗi lần cuộn hết 1 viewport
-const BASE_Y = 0.16; // đẩy mô hình lên một chút, dành khoảng trống cho bóng đổ
+const BASE_Y = 0.02; // gần như căn giữa theo chiều dọc — hero giờ là banner rộng, không còn bóng đổ CSS cần chừa chỗ
 const BASE_ROT_Y = -Math.PI / 6; // góc mặc định: quay 30° quanh trục thẳng đứng (chiều ngược lại)
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -100,7 +100,7 @@ new GLTFLoader().load(
     const box = new THREE.Box3().setFromObject(stand);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
-    const scale = 2.45 / Math.max(size.x, size.y, size.z);
+    const scale = 3.0 / Math.max(size.x, size.y, size.z);
 
     stand.position.sub(center);
     stand.scale.setScalar(scale);
@@ -133,7 +133,8 @@ function resize() {
 
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
-  // Lùi camera trên khung hẹp để mô hình không bị tràn
+  // Canvas nằm trong ô lưới riêng (.hero-brand-model, xem css/style.css) nên luôn có
+  // tỉ lệ gần vuông ở mọi kích thước desktop — không cần công thức bù trừ theo tay.
   camera.position.z = camera.aspect < 1 ? 6.2 : 5.1;
   camera.updateProjectionMatrix();
 }

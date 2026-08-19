@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Akenxi — Cửa hàng bán phụ kiện điện thoại chính hãng</title>
-<meta name="description" content="Akenxi — Cửa hàng bán phụ kiện điện thoại chính hãng: tai nghe, sạc, cáp, ốp lưng, pin dự phòng. Bảo hành 12 tháng.">
+<title>AKENXI — Technology designed for the way you live</title>
+<meta name="description" content="AKENXI — thương hiệu công nghệ cá nhân: âm thanh, sạc nhanh, cáp và phụ kiện di động. Thiết kế cho cuộc sống số của bạn.">
 <link rel="icon" type="image/png" href="images/logo2.png">
 <link rel="preload" href="models/Headphone.glb" as="fetch" crossorigin>
 <link rel="stylesheet" href="css/style.css">
@@ -14,7 +14,7 @@
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
       <a class="logo" href="index.html">
-        <img class="logo-img" src="images/akenxi-full-transparent.svg" alt="AKENXI" width="200" height="100">
+        <img class="logo-img" src="images/akenxi-full-transparent.svg" alt="AKENXI" width="433" height="100">
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Menu chính">
@@ -49,75 +49,39 @@
 
   <main id="top">
 
-<!-- ============================ HERO BANNER ============================ -->
-    <section class="hero">
-      <div class="container hero-inner">
+<!-- ============================ HERO CAMPAIGN =========================== -->
+    <section class="hero" id="heroSlider" aria-label="Campaign nổi bật">
+      <div class="hero-slide is-active" data-slide-brand>
+        <div class="hero-slide-3d" aria-hidden="true"></div>
         <div class="hero-copy">
-          <p class="hero-eyebrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 7h11v9H3zm11 3h4l3 3v3h-7z"></path>
-              <circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle>
-            </svg>
-            Giao hàng toàn quốc
-          </p>
-          <h1>Akenxi</h1>
-          <p class="hero-sub">Cửa hàng bán phụ kiện điện thoại chính hãng</p>
-          <a class="btn btn-primary" href="san-pham.html">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.55L21 8H6.6"></path>
-              <circle cx="10" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
-            </svg>
-            Mua ngay
-          </a>
-        </div>
-
-        <div class="hero-visual">
-          <div class="model-wrap">
-            <div class="model-floor" aria-hidden="true"><span></span></div>
-            <div class="model-shadow" aria-hidden="true"></div>
-            <canvas id="headphoneCanvas" aria-label="Mô hình tai nghe 3D" role="img"></canvas>
-            <div class="model-loader" id="modelLoader">
-              <div class="bar"><i id="loaderBar"></i></div>
-              <span id="loaderText">Đang tải mô hình 3D… 0%</span>
+          <div class="container hero-brand-grid">
+            <div class="hero-brand-text">
+              <span class="hero-tag">Brand</span>
+              <h1 class="display">Power your<br>digital life</h1>
+              <p class="hero-sub">Technology designed for the way you live.</p>
+              <div class="hero-cta-row">
+                <a class="btn btn-primary" href="san-pham.html">Explore Products</a>
+                <a class="btn btn-outline" href="ve-chung-toi.html">Discover AKENXI</a>
+              </div>
+            </div>
+            <div class="hero-brand-model">
+              <canvas id="headphoneCanvas" aria-label="Mô hình tai nghe 3D — kéo để xoay" role="img"></canvas>
+              <div class="model-loader" id="modelLoader">
+                <div class="bar"><i id="loaderBar"></i></div>
+                <span id="loaderText">Đang tải mô hình 3D… 0%</span>
+              </div>
             </div>
           </div>
-
-          <ul class="hero-badges" aria-label="Cam kết của Akenxi">
-            <li class="hero-badge b-tl">
-              <span class="hb-ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 7h11v9H3zm11 3h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle>
-                </svg>
-              </span>
-              <span class="hb-text"><strong>Miễn phí vận chuyển</strong><span>Đơn từ 300.000₫</span></span>
-            </li>
-            <li class="hero-badge b-tr">
-              <span class="hb-ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3l7 3v5.5c0 4.3-2.9 7.6-7 9.5-4.1-1.9-7-5.2-7-9.5V6z"></path><path d="m9 12 2 2 4-4"></path>
-                </svg>
-              </span>
-              <span class="hb-text"><strong>Hàng chính hãng</strong><span>Bảo hành 12 tháng</span></span>
-            </li>
-            <li class="hero-badge b-bl">
-              <span class="hb-ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 12a8 8 0 1 1 2.5 5.8L4 20"></path><path d="M12 8v4l3 2"></path>
-                </svg>
-              </span>
-              <span class="hb-text"><strong>Đổi mới 30 ngày</strong><span>Lỗi là đổi, không sửa</span></span>
-            </li>
-            <li class="hero-badge b-br">
-              <span class="hb-ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v2.5a2.5 2.5 0 0 1-2.7 2.5A17 17 0 0 1 4 5.7 2.5 2.5 0 0 1 6.5 3H9l1.5 4.5-2 1.5a12.5 12.5 0 0 0 6.5 6.5l1.5-2z"></path>
-                </svg>
-              </span>
-              <span class="hb-text"><strong>Hỗ trợ 24/7</strong><span>Hotline 1900 6868</span></span>
-            </li>
-          </ul>
         </div>
       </div>
+      <div data-hero-slides></div>
+      <button class="hero-nav prev" type="button" data-hero-prev aria-label="Campaign trước">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+      </button>
+      <button class="hero-nav next" type="button" data-hero-next aria-label="Campaign tiếp theo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+      </button>
+      <div class="hero-dots" data-hero-dots aria-label="Chọn campaign"></div>
     </section>
     <!-- ============================= DANH MỤC ============================== -->
     <section class="section" id="danh-muc">
@@ -143,9 +107,8 @@
             <img src="images/products/akenxi_cable03/AKENXI_Cable_Web_02_1600x1600.jpg" alt="Cables" loading="lazy" decoding="async">
             <h3>Cables</h3>
           </a>
-          <!-- Chưa có ảnh chụp riêng giá đỡ/phụ kiện di động AKENXI — dùng tạm ảnh tham khảo -->
           <a class="cat-tile reveal" href="san-pham.html">
-            <img src="images/products/gia-do-o-to-magpro.webp" alt="Mobile" loading="lazy" decoding="async">
+            <img src="images/products/akenxi_mobile/1787118392590_6507308237392180214_6507308237392180214_ad05288ad2c516f2418c28b28e1ef5fb.jpg" alt="Mobile" loading="lazy" decoding="async">
             <h3>Mobile</h3>
           </a>
           <a class="cat-tile reveal" href="san-pham.html">
@@ -603,7 +566,7 @@
     <div class="container footer-top">
       <div class="footer-brand">
         <a class="logo" href="index.html">
-          <img class="logo-img" src="images/akenxi-full-transparent.svg" alt="AKENXI" width="200" height="100">
+          <img class="logo-img" src="images/akenxi-full-transparent.svg" alt="AKENXI" width="433" height="100">
         </a>
         <p>Cửa hàng phụ kiện điện thoại chính hãng — 6 chi nhánh tại Hà Nội, TP.HCM, Đà Nẵng.</p>
         <p class="footer-hotline">Hotline: <b>1900 6868</b></p>
@@ -713,5 +676,6 @@
   <script type="module" src="js/main.js"></script>
   <script src="js/ui.js" defer></script>
   <script src="js/cart.js" defer></script>
+  <script src="js/hero.js" defer></script>
 </body>
 </html>

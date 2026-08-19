@@ -1,10 +1,11 @@
-# Akenxi — demo web bán phụ kiện điện thoại
+# Akenxi — demo web thương hiệu công nghệ AKENXI
 
-Trang tĩnh HTML/CSS/JS thuần, giao diện premium-tech tối giản: ảnh sản phẩm lớn,
-nhiều khoảng trắng, chuyển động tiết chế (fade/zoom nhẹ, không xoay/glitch).
-Hero trang chủ là **hệ thống campaign đổi được**: 4 slide cross-fade tự động
-(Brand/Audio/Charging/New Product), đổi campaign mới chỉ cần sửa data + ảnh trong
-`js/hero.js`, không phải sửa CSS/markup — xem mục "Hero campaign" bên dưới.
+Trang tĩnh HTML/CSS/JS thuần, giao diện premium-tech kiểu Hoco/Acefast/Ugreen: ảnh/mô
+hình sản phẩm lớn, nền graphite tối cho hero, nhiều khoảng trắng, chuyển động tiết chế.
+Hero trang chủ là **carousel 4 campaign**: slide đầu ("Brand") dùng mô hình tai nghe 3D
+tương tác (three.js, `js/main.js`), 3 slide sau (Audio/Charging/New Product) dùng ảnh
+sản phẩm — tự chuyển mỗi 5 giây, dừng khi hover/focus, vuốt được trên mobile, đổi
+campaign ảnh chỉ cần sửa data trong `js/hero.js` — xem mục "Hero campaign" bên dưới.
 
 ## Chạy
 
@@ -28,13 +29,18 @@ tin-tuc.html                   Tin tức: 6 bài viết
 lien-he.html                   Liên hệ: form tư vấn + hotline/email/địa chỉ
 thanh-toan.html                Thanh toán: thông tin nhận hàng + phương thức + xác nhận
 css/style.css                  Design token, layout, responsive
-js/hero.js                     Hero campaign: mảng HERO_CAMPAIGNS + carousel cross-fade
+js/hero.js                     Hero carousel: mảng PHOTO_CAMPAIGNS (Audio/Charging/New
+                                Product) + điều khiển chung (autoplay, dot, vuốt). Slide
+                                "Brand" (3D) nằm tĩnh trong index.html, không sinh bởi JS
+js/main.js, js/vendor/three/,
+models/Headphone.glb           Mô hình tai nghe 3D cho slide "Brand" của hero — xem mục
+                                "Mô hình 3D" bên dưới
 js/cart.js                     Giỏ hàng: thêm/xoá/số lượng, localStorage, drawer + toast
 js/checkout.js                 Thanh toán: tỉnh/phường, phương thức, xác nhận, xoá giỏ
 area/provinces.json            34 tỉnh/thành (rút gọn từ xevip/html/area/provinces.json)
 area/wards/<mã tỉnh>.json      Phường/xã theo tỉnh, tải khi chọn tỉnh (3.321 phường/xã)
-images/products/*.webp         Ảnh sản phẩm demo cũ (tham khảo từ baseus.vn) — vẫn dùng làm
-                                placeholder cho các mục chưa có ảnh AKENXI thật (Power, Mobile)
+images/products/*.webp         Ảnh sản phẩm demo cũ (tham khảo từ baseus.vn), không còn dùng
+                                cho category — mọi tile category giờ dùng ảnh AKENXI thật
 images/products/akenxi_*/      Ảnh chụp sản phẩm AKENXI thật, 1 thư mục / sản phẩm
 images/office/*.jpg            Ảnh showroom/văn phòng AKENXI — dùng cho brand story + mosaic
 images/speaker_product/*.jpg   Ảnh loa karaoke AKENXI — dùng cho category Accessories
@@ -49,19 +55,37 @@ images/akenxi-signature-black.svg   Logo AKENXI chính thức (icon + wordmark),
 images/qr-bank.svg, qr-momo.svg   Mã QR giả (SVG tự sinh) cho 2 cách chuyển khoản
 js/ui.js                       Menu mobile, reveal khi cuộn, highlight menu theo section
 fonts/inter-*.woff2            Inter (latin / latin-ext / vietnamese)
-js/main.js, js/vendor/three/,
-models/Headphone.glb           Hero 3D cũ — KHÔNG còn được trang nào tham chiếu (đã thay bằng
-                                hero campaign ảnh tĩnh), giữ lại trên đĩa phòng khi cần dùng lại
+images/akenxi-full-transparent.svg   Logo AKENXI dùng trong header/footer mọi trang
+images/logo2-full.png, logo2.png   Bản logo dự phòng (favicon dùng logo2.png)
 ```
 
 ## Hero campaign
 
-Trang chủ dùng carousel cross-fade 4 campaign, tự chuyển slide mỗi ~6 giây (dừng khi
-hover/focus, tắt hẳn autoplay nếu `prefers-reduced-motion`), có chấm điều hướng bên dưới.
+Trang chủ dùng carousel cross-fade 4 campaign, tự chuyển slide mỗi ~5 giây (dừng khi
+hover/focus, tắt hẳn autoplay nếu `prefers-reduced-motion`), có chấm điều hướng bên dưới
+và vuốt trái/phải để đổi slide trên mobile (bỏ qua khi vuốt bắt đầu trong canvas 3D, vì
+đó là cử chỉ kéo-để-xoay mô hình).
 
-Để thêm/đổi campaign: sửa mảng `HERO_CAMPAIGNS` trong [`js/hero.js`](js/hero.js) — mỗi phần tử
-gồm `tag` (nhãn nhỏ), `headline` (tiêu đề lớn, hỗ trợ `<br>`), `image`, `alt`, và tuỳ chọn
-`ctaText`/`ctaHref`. Không cần sửa CSS hay HTML.
+- **Slide 1 "Brand"** nằm tĩnh trong `index.html` (`[data-slide-brand]`) — nền gradient
+  graphite kiểu studio + mô hình tai nghe 3D tương tác (three.js, xem mục "Mô hình 3D").
+  Không sinh bởi JS vì `js/main.js` cần tìm thấy `#headphoneCanvas` ngay khi trang tải.
+- **3 slide sau** (Audio/Charging/New Product) sinh bởi [`js/hero.js`](js/hero.js) từ mảng
+  `PHOTO_CAMPAIGNS` — mỗi phần tử gồm `tag`, `headline` (hỗ trợ `<br>`), `image`, `alt`,
+  tuỳ chọn `ctaText`/`ctaHref`/`graphic:"waveform"`. Đổi campaign ảnh chỉ cần sửa mảng này.
+
+## Mô hình 3D (slide "Brand")
+
+- **Đứng tự nhiên:** trục cao của model gốc là Z nên bọc trong group quay `rotation.x = -90°`,
+  sau đó căn tâm + scale vừa khung.
+- **Góc mặc định:** `BASE_ROT_Y = -Math.PI / 6` (nghiêng 30°) — đổi dấu/giá trị hằng này để chỉnh góc và chiều quay.
+- **Màu đen:** `paintBlack()` clone vật liệu, gán màu/độ nhám theo tên bộ phận, tắt `transmission` của bản gốc.
+- **Ánh sáng studio trung tính:** key trên trước, fill dưới trái, rim sau — không đèn màu.
+- **Xoay theo scroll:** `progress = scrollY / innerHeight` → `rotation.y`, làm mượt bằng lerp mỗi frame;
+  kéo chuột/chạm trên canvas xoay thêm (`pointerdown/move/up`, có `setPointerCapture`).
+- **Nền:** gradient graphite kiểu studio (`.hero-slide-3d`) thay cho sàn caro/bóng đổ CSS của
+  bản cũ — không còn floor/shadow riêng, phù hợp nền tối thay vì nền trắng.
+- Render loop tạm dừng khi hero ra khỏi viewport (`IntersectionObserver`), và tôn trọng
+  `prefers-reduced-motion`.
 
 ## Giỏ hàng
 
@@ -97,20 +121,23 @@ Kéo chuột / vuốt ngón tay cũng trượt được (pointer events, nhả t
 
 ## Các section
 
-Hero campaign (4 slide) → danh mục lớn (6: Audio/Charging/Power/Cables/Mobile/Accessories) →
+Hero campaign (4 slide, slide 1 là mô hình 3D) → danh mục lớn (6: Audio/Charging/Power/Cables/Mobile/Accessories) →
 showcase Audio → sản phẩm bán chạy (12) → showcase Charging → AKENXI Technology (4) →
 brand story → mosaic gallery (4 ảnh showroom) → đánh giá khách hàng (3) → đăng ký nhận tin → footer.
-Ảnh sản phẩm AKENXI thật nằm ở `images/products/akenxi_*/`; một số mục (Power, Mobile,
-đánh giá, chi nhánh, bài viết) vẫn là ảnh/nội dung minh hoạ do chưa có hàng/số liệu thật —
-xem bảng mapping ảnh trong plan hoặc thay trực tiếp trong `index.html`/`js/hero.js`.
+Ảnh sản phẩm AKENXI thật nằm ở `images/products/akenxi_*/` (kể cả category Power dùng
+`akenxi_charger02` và Mobile dùng `akenxi_mobile`); một số nội dung khác (đánh giá,
+chi nhánh, bài viết) vẫn là nội dung minh hoạ do chưa có số liệu thật.
 
 ## Tinh chỉnh nhanh
 
 | Muốn đổi | Sửa ở |
 | --- | --- |
-| Campaign hero (nội dung/ảnh) | mảng `HERO_CAMPAIGNS` trong `js/hero.js` |
-| Thời gian tự chuyển slide hero | `6000` (ms) trong `start()`, `js/hero.js` |
-| Màu thương hiệu / màu giá | `--accent` (lấy từ logo: `#03624f`), `--price` trong `css/style.css` |
+| Campaign hero ảnh (nội dung/ảnh) | mảng `PHOTO_CAMPAIGNS` trong `js/hero.js` |
+| Nội dung slide "Brand" (3D) | trực tiếp trong `index.html`, khối `[data-slide-brand]` |
+| Thời gian tự chuyển slide hero | `5000` (ms) trong `start()`, `js/hero.js` |
+| Góc/kích thước mô hình 3D | `BASE_ROT_Y` / hằng `2.45` trong `js/main.js` |
+| Chiều cao header / logo | `--header-h`, `.logo-img` trong `css/style.css` (có override mobile) |
+| Màu thương hiệu / chữ / giá | `--accent` (`#007F66`), `--text`, `--price` trong `css/style.css` |
 | Cỡ chữ tiêu đề lớn (hero/showcase/story) | class `.display` trong `css/style.css` |
 | Nút liên hệ nhanh (Zalo/phone/Messenger) | `.quick-contact` trong `css/style.css`, markup ở cuối mỗi trang |
 | Danh mục lớn (ảnh/tên) | `.cat-grid-big` trong `index.html` |

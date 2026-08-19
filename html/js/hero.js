@@ -1,18 +1,9 @@
-/* Hero campaign carousel — đổi campaign mới = sửa mảng HERO_CAMPAIGNS + đổi ảnh,
-   không cần sửa CSS/markup. */
+/* Hero campaign carousel — slide "Brand" (mô hình 3D) đã nằm sẵn trong index.html
+   (xem js/main.js). File này chỉ dựng các slide ảnh còn lại + điều khiển chung
+   (autoplay, dot, vuốt). Đổi campaign ảnh = sửa mảng PHOTO_CAMPAIGNS, không cần
+   sửa CSS/markup. */
 (function () {
-  var HERO_CAMPAIGNS = [
-    {
-      tag: "Brand",
-      headline: "Power your<br>digital life",
-      sub: "Technology designed for the way you live.",
-      image: "images/products/akenxi_headphone01/AKENXI_Headphone_Web_01.jpg",
-      alt: "AKENXI — tai nghe chụp tai màu đen",
-      ctaText: "Explore Products",
-      ctaHref: "san-pham.html",
-      ctaSecondaryText: "Discover AKENXI",
-      ctaSecondaryHref: "ve-chung-toi.html",
-    },
+  var PHOTO_CAMPAIGNS = [
     {
       tag: "Audio",
       headline: "Sound.<br>Your way.",
@@ -62,63 +53,63 @@
     );
   }
 
-  HERO_CAMPAIGNS.forEach(function (c, i) {
+  // Dựng các slide ảnh (Audio/Charging/New Product) — slide "Brand" (3D) đã có sẵn trong HTML
+  PHOTO_CAMPAIGNS.forEach(function (c) {
     var slide = document.createElement("div");
-    slide.className = "hero-slide" + (i === 0 ? " is-active" : "");
+    slide.className = "hero-slide";
 
-    var subHtml = c.sub ? '<p class="hero-sub">' + c.sub + "</p>" : "";
-
-    var ctaRow = "";
-    if (c.ctaText || c.ctaSecondaryText) {
-      var primary = c.ctaText
-        ? '<a class="btn btn-primary" href="' + c.ctaHref + '">' + c.ctaText + "</a>"
-        : "";
-      var secondary = c.ctaSecondaryText
-        ? '<a class="btn btn-outline" href="' + c.ctaSecondaryHref + '">' + c.ctaSecondaryText + "</a>"
-        : "";
-      ctaRow = '<div class="hero-cta-row">' + primary + secondary + "</div>";
-    }
+    var ctaRow = c.ctaText
+      ? '<div class="hero-cta-row"><a class="btn btn-primary" href="' + c.ctaHref + '">' + c.ctaText + "</a></div>"
+      : "";
 
     slide.innerHTML =
-      '<img src="' + c.image + '" alt="' + c.alt + '" loading="' + (i === 0 ? "eager" : "lazy") + '">' +
+      '<img src="' + c.image + '" alt="' + c.alt + '" loading="lazy">' +
       '<div class="hero-copy"><div class="container">' +
         '<span class="hero-tag">' + c.tag + "</span>" +
         '<h1 class="display">' + c.headline + "</h1>" +
-        subHtml +
         ctaRow +
       "</div></div>" +
       (c.graphic === "waveform" ? waveformHtml() : "");
     slidesEl.appendChild(slide);
+  });
 
+  // Toàn bộ slide theo đúng thứ tự DOM: Brand (3D, tĩnh) rồi tới các slide ảnh
+  var slideEls = root.querySelectorAll(".hero-slide");
+  var TAGS = ["Brand"].concat(PHOTO_CAMPAIGNS.map(function (c) { return c.tag; }));
+
+  TAGS.forEach(function (tag, i) {
     var dot = document.createElement("button");
     dot.type = "button";
     dot.className = "hero-dot" + (i === 0 ? " is-active" : "");
-    dot.setAttribute("aria-label", "Xem campaign " + c.tag);
+    dot.setAttribute("aria-label", "Xem campaign " + tag);
     dot.addEventListener("click", function () { go(i); restart(); });
     dotsEl.appendChild(dot);
   });
 
-  var slideEls = slidesEl.querySelectorAll(".hero-slide");
   var dotEls = dotsEl.querySelectorAll(".hero-dot");
+  var prevBtn = root.querySelector("[data-hero-prev]");
+  var nextBtn = root.querySelector("[data-hero-next]");
+  var total = slideEls.length;
 
   function go(i) {
-    index = i;
-    slideEls.forEach(function (el, n) { el.classList.toggle("is-active", n === i); });
-    dotEls.forEach(function (el, n) { el.classList.toggle("is-active", n === i); });
+    index = (i + total) % total;
+    slideEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
+    dotEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
   }
 
-  function next() { go((index + 1) % HERO_CAMPAIGNS.length); }
+  function next() { go(index + 1); }
+  function prev() { go(index - 1); }
 
   function stop() {
     if (timer) { window.clearInterval(timer); timer = null; }
   }
 
   function start() {
-    if (reduceMotion || HERO_CAMPAIGNS.length < 2) return;
+    if (reduceMotion || total < 2) return;
     stop();   // luôn dọn interval cũ trước — tránh chồng nhiều interval khi
               // mouseenter/mouseleave/focusin/focusout dồn dập lúc di chuột qua lại
               // ở rìa hero, vốn là nguyên nhân khiến campaign nhảy liên tục
-    timer = window.setInterval(next, 6000);
+    timer = window.setInterval(next, 5000);
   }
 
   function restart() { stop(); start(); }
@@ -127,6 +118,34 @@
   root.addEventListener("mouseleave", start);
   root.addEventListener("focusin", stop);
   root.addEventListener("focusout", start);
+
+  // Nút điều hướng 2 bên — chỉ hiển thị ở desktop (CSS ẩn trên mobile)
+  if (prevBtn) prevBtn.addEventListener("click", function () { prev(); restart(); });
+  if (nextBtn) nextBtn.addEventListener("click", function () { next(); restart(); });
+
+  /* Vuốt để đổi campaign trên mobile — áp dụng cho toàn bộ hero kể cả vùng mô
+     hình 3D, vì ở mobile canvas đã bị `pointer-events: none` (css/style.css) nên
+     không còn tranh chấp với thao tác kéo-xoay (chỉ bật ở desktop). */
+  var touchStartX = null;
+  var touchStartY = null;
+
+  root.addEventListener("touchstart", function (e) {
+    var t = e.touches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, { passive: true });
+
+  root.addEventListener("touchend", function (e) {
+    if (touchStartX === null) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - touchStartX;
+    var dy = t.clientY - touchStartY;
+    touchStartX = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0) next(); else prev();
+      restart();
+    }
+  });
 
   start();
 })();
