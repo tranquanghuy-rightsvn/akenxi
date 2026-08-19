@@ -5,20 +5,20 @@
 (function () {
   var PHOTO_CAMPAIGNS = [
     {
-      tag: "Audio",
+      tag: "Âm thanh",
       headline: "Sound.<br>Your way.",
       image: "images/products/akenxi_earphone01/AKENXI_web_01.jpg",
       alt: "AKENXI — tai nghe true wireless",
-      ctaText: "Khám phá Audio",
+      ctaText: "Khám phá Âm thanh",
       ctaHref: "san-pham.html",
       graphic: "waveform",
     },
     {
-      tag: "Charging",
+      tag: "Sạc nhanh",
       headline: "Power<br>without limits.",
       image: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_01.jpg",
       alt: "AKENXI — củ sạc nhanh 100W",
-      ctaText: "Khám phá Charging",
+      ctaText: "Khám phá Sạc nhanh",
       ctaHref: "san-pham.html",
     },
     {
