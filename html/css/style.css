@@ -57,15 +57,20 @@
 
 /* ------------------------------ Design tokens ----------------------------- */
 
+/* Tỉ lệ màu chủ đạo trên toàn trang (nguyên tắc, không phải giá trị tuyệt đối):
+   Trắng/nền sáng (--bg, --bg-soft) ~80-85% diện tích, Đen/xám (--text, --graphite)
+   ~10-15%, xanh thương hiệu (--accent) ~5% — chỉ dùng cho CTA/tag/hover, không
+   dùng làm nền mảng lớn. Khi thêm section mới, ưu tiên nền sáng, dùng --graphite
+   dè sẻn (đã giới hạn ở hero "Brand" + section "AKENXI Technology"). */
 :root {
   --bg: #ffffff;
   --bg-soft: #F5F5F3;
   --text: #333E4C;        /* slate-navy đậm — rõ ràng là màu, không dễ nhầm với đen */
   --text-muted: #6b7280;
   --border: #e5e7eb;
-  --accent: #007F66;      /* xanh thương hiệu AKENXI chính thức */
-  --accent-dark: #00664F;
-  --graphite: #1c1f22;    /* nền tối cho section premium */
+  --accent: #004526;      /* xanh thương hiệu AKENXI chính thức — CTA/tag/hover, ~5% diện tích */
+  --accent-dark: #00301A;
+  --graphite: #1c1f22;    /* nền tối cho section premium — dùng dè sẻn, ~10-15% diện tích */
   --price: #d92d20;       /* chỉ dùng ở tổng tiền giỏ hàng/thanh toán, không dùng cho thẻ sản phẩm */
 
   --radius: 10px;
@@ -177,12 +182,15 @@ svg { width: 100%; height: 100%; }
   display: block;
   padding: 8px 14px;
   border-radius: 6px;
-  font-size: 14.5px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  text-transform: uppercase;
   color: var(--text-muted);
   transition: color .15s ease, background .15s ease;
 }
 
-.main-nav a:hover { color: var(--accent); background: rgba(0, 127, 102, .06); }
+.main-nav a:hover { color: var(--accent); background: rgba(0, 69, 38, .06); }
 .main-nav a.is-active { color: var(--accent); font-weight: 600; }
 
 /* Actions */
@@ -264,16 +272,16 @@ svg { width: 100%; height: 100%; }
 
 .hero-slide.is-active { opacity: 1; visibility: visible; }
 
-.hero-slide img {
+/* Ảnh campaign nằm trong .hero-slide-media (cùng cấu trúc lưới với slide "Brand"
+   3D, xem bên dưới) — mobile giữ nguyên kiểu phủ kín làm nền như cũ (đang ổn),
+   desktop chuyển sang thẻ nền sáng + contain để không còn crop/zoom sâu vào sản
+   phẩm và không bị lệch tông đen/trắng gượng gạo. */
+.hero-slide-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  transform: scale(1.02);
-  transition: transform 7s ease-out;
 }
-
-.hero-slide.is-active img { transform: scale(1.08); }
 
 .hero-slide::after {
   content: "";
@@ -303,11 +311,11 @@ svg { width: 100%; height: 100%; }
 
 .hero-copy .container { pointer-events: auto; }
 
-/* Bố cục 2 cột thật (grid) cho slide Brand — cột chữ và cột mô hình tách biệt
-   hoàn toàn nên không cần tính toán lệch camera theo tay (magic number) và
-   vùng chữ không còn đè pointer-events lên vùng mô hình (nguyên nhân trước đó
-   khiến kéo-xoay mô hình bị "mất" tương tác). */
-.hero-brand-grid {
+/* Bố cục 2 cột thật (grid) — DÙNG CHUNG cho mọi slide (3D lẫn ảnh sản phẩm):
+   cột chữ và cột media tách biệt hoàn toàn, không cần tính lệch vị trí theo tay
+   (magic number), và vùng chữ không đè pointer-events lên vùng model/canvas
+   (nguyên nhân trước đó khiến kéo-xoay mô hình 3D bị "mất" tương tác). */
+.hero-slide-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
@@ -315,12 +323,49 @@ svg { width: 100%; height: 100%; }
   pointer-events: none;   /* mỗi cột tự bật lại pointer-events riêng bên dưới */
 }
 
-.hero-brand-text { pointer-events: auto; }
+.hero-slide-text { pointer-events: auto; }
 
-.hero-brand-model {
+.hero-slide-media {
   position: relative;
   height: min(64vh, 620px);
-  pointer-events: auto;   /* vùng kéo-xoay mô hình, tách riêng khỏi cột chữ */
+  pointer-events: auto;   /* vùng kéo-xoay mô hình 3D, tách riêng khỏi cột chữ */
+}
+
+/* Slide ảnh sản phẩm (không phải 3D): ảnh sản phẩm có nền trắng gần như tuyệt
+   đối (đã đo màu thật: #fefefe/#fdfdfd/#ffffff) — giữ nguyên ảnh, KHÔNG mask/
+   không khung. Thay vào đó đổi hẳn nền của chính slide hero (desktop) từ
+   graphite tối sang trùng màu trắng của ảnh, nên ranh giới biến mất tự nhiên
+   thay vì tương phản đen/trắng gượng gạo. Chữ trên slide này đổi sang màu tối
+   cho hợp nền sáng (chỉ áp dụng cho slide ảnh — slide "Brand" 3D vẫn nền tối
+   như cũ). Mobile giữ nguyên hoàn toàn (không đổi). */
+@media (min-width: 981px) {
+  .hero-slide-media.is-photo img {
+    object-fit: contain;
+    padding: 4%;
+  }
+
+  .hero-slide.is-photo-slide {
+    background:
+      radial-gradient(ellipse 46% 60% at 6% 8%, rgba(28, 31, 34, .5), transparent 70%),
+      radial-gradient(ellipse 42% 55% at 96% 100%, rgba(28, 31, 34, .38), transparent 70%),
+      #fff;
+  }
+
+  .hero-slide.is-photo-slide::after { content: none; }
+
+  .hero-slide.is-photo-slide .hero-copy { color: var(--text); }
+
+  .hero-slide.is-photo-slide .hero-copy .display { text-shadow: none; }
+
+  .hero-slide.is-photo-slide .hero-tag {
+    border-color: rgba(51, 62, 76, .22);
+    color: var(--text);
+  }
+
+  .hero-slide.is-photo-slide .hero-sub {
+    color: var(--text-muted);
+    text-shadow: none;
+  }
 }
 
 #headphoneCanvas {
@@ -385,27 +430,6 @@ svg { width: 100%; height: 100%; }
   text-transform: uppercase;
   letter-spacing: .5px;
   font-size: 14.5px;
-}
-
-/* Waveform trang trí rất nhẹ, chỉ dùng cho campaign Audio */
-.hero-waveform {
-  position: absolute;
-  right: clamp(24px, 6vw, 96px);
-  bottom: clamp(90px, 14vh, 140px);
-  z-index: 1;
-  display: flex;
-  align-items: flex-end;
-  gap: 5px;
-  height: 64px;
-  opacity: .28;
-  pointer-events: none;
-}
-
-.hero-waveform span {
-  display: block;
-  width: 4px;
-  border-radius: 999px;
-  background: #fff;
 }
 
 /* Buttons */
@@ -798,7 +822,7 @@ svg { width: 100%; height: 100%; }
   margin: 0 auto 16px;
   padding: 13px;
   border-radius: 50%;
-  background: rgba(0, 127, 102, .08);
+  background: rgba(0, 69, 38, .08);
   color: var(--accent);
 }
 
@@ -809,7 +833,7 @@ svg { width: 100%; height: 100%; }
 .section-graphite { background: var(--graphite); color: #fff; }
 .section-graphite .display,
 .section-graphite .section-head h2 { color: #fff; }
-.section-graphite .tech-ico { background: rgba(0, 127, 102, .22); color: #fff; }
+.section-graphite .tech-ico { background: rgba(0, 69, 38, .22); color: #fff; }
 .section-graphite .tech-card p { color: rgba(255, 255, 255, .62); }
 
 /* -------------------------------- Brand story ------------------------------ */
@@ -1075,7 +1099,7 @@ svg { width: 100%; height: 100%; }
 .post-card:hover { border-color: var(--accent); }
 
 .post-meta { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--text-muted); }
-.post-cat { padding: 3px 9px; border-radius: 999px; background: rgba(0, 127, 102, .08); color: var(--accent); font-weight: 600; }
+.post-cat { padding: 3px 9px; border-radius: 999px; background: rgba(0, 69, 38, .08); color: var(--accent); font-weight: 600; }
 
 .post-card h3 { margin-top: 12px; font-size: 17px; font-weight: 700; line-height: 1.35; letter-spacing: -.2px; }
 .post-card p { margin-top: 10px; font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
@@ -1494,7 +1518,7 @@ svg { width: 100%; height: 100%; }
 
 .pay-option input:checked + .pay-box {
   border-color: var(--accent);
-  background: rgba(0, 127, 102, .05);
+  background: rgba(0, 69, 38, .05);
   box-shadow: inset 0 0 0 1px var(--accent);
 }
 
@@ -1638,7 +1662,7 @@ svg { width: 100%; height: 100%; }
   margin: 0 auto 16px;
   padding: 14px;
   border-radius: 50%;
-  background: rgba(0, 127, 102, .1);
+  background: rgba(0, 69, 38, .1);
   color: var(--accent);
 }
 
@@ -1703,17 +1727,29 @@ svg { width: 100%; height: 100%; }
   .branch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .hero { height: clamp(420px, 74vh, 640px); }
-  .hero-waveform { display: none; }
 
-  /* Dưới 980px: bỏ 2 cột, mô hình 3D làm nền toàn slide (giống các slide ảnh),
-     chữ nằm đè lên trên — nhất quán với cách các campaign ảnh hiển thị trên mobile. */
-  .hero-brand-grid { grid-template-columns: 1fr; height: auto; }
-  .hero-brand-model {
+  /* Dưới 980px: bỏ 2 cột, media (3D hoặc ảnh) làm nền toàn slide, chữ nằm đè
+     lên trên — cùng 1 kiểu hiển thị cho mọi campaign trên mobile (đang ổn, giữ
+     nguyên). Mask mờ dần của ảnh chỉ áp dụng ở desktop nên không cần reset gì
+     thêm ở đây, chỉ đảm bảo không còn padding/background sót lại. */
+  .hero-slide-grid { grid-template-columns: 1fr; height: auto; }
+  .hero-slide-media {
     position: absolute;
     inset: 0;
     height: auto;
     z-index: -1;
     pointer-events: none;   /* mobile: vuốt đổi campaign, không kéo-xoay mô hình */
+    background: none;
+    padding: 0;
+  }
+
+  /* Làm tối bớt phần media nền để chữ trắng đè lên vẫn đọc rõ (thay cho lớp
+     gradient cũ vốn nằm ngoài .hero-copy nên không phủ được lên media nữa). */
+  .hero-slide-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10, 14, 20, .78) 0%, rgba(10, 14, 20, .4) 55%, rgba(10, 14, 20, .12) 100%);
   }
 
   /* Mobile dùng vuốt để đổi campaign — ẩn nút điều hướng 2 bên */

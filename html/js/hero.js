@@ -8,15 +8,16 @@
       tag: "Âm thanh",
       headline: "Sound.<br>Your way.",
       image: "images/products/akenxi_earphone01/AKENXI_web_01.jpg",
+      imageDesktop: "images/products/akenxi_earphone01/AKENXI_web_01_cutout.png",
       alt: "AKENXI — tai nghe true wireless",
       ctaText: "Khám phá Âm thanh",
       ctaHref: "san-pham.html",
-      graphic: "waveform",
     },
     {
       tag: "Sạc nhanh",
       headline: "Power<br>without limits.",
       image: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_01.jpg",
+      imageDesktop: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_01_cutout.png",
       alt: "AKENXI — củ sạc nhanh 100W",
       ctaText: "Khám phá Sạc nhanh",
       ctaHref: "san-pham.html",
@@ -25,6 +26,7 @@
       tag: "New Product",
       headline: "Coming<br>soon.",
       image: "images/products/akenxi_cable02/AKENXI_Cable_Web_01_1600x1600.jpg",
+      imageDesktop: "images/products/akenxi_cable02/AKENXI_Cable_Web_01_1600x1600_cutout.png",
       alt: "AKENXI — sản phẩm sắp ra mắt",
       ctaText: "",
       ctaHref: "",
@@ -40,36 +42,36 @@
   var index = 0;
   var timer = null;
 
-  // 6 cột cao thấp xen kẽ, đủ để gợi ý waveform mà không rối mắt
-  var WAVEFORM_HEIGHTS = [18, 38, 26, 52, 30, 44];
-
-  function waveformHtml() {
-    return (
-      '<div class="hero-waveform" aria-hidden="true">' +
-      WAVEFORM_HEIGHTS.map(function (h) {
-        return '<span style="height:' + h + 'px"></span>';
-      }).join("") +
-      "</div>"
-    );
-  }
-
-  // Dựng các slide ảnh (Audio/Charging/New Product) — slide "Brand" (3D) đã có sẵn trong HTML
+  // Dựng các slide ảnh (Audio/Charging/New Product) — slide "Brand" (3D) đã có sẵn trong HTML.
+  // Dùng chung cấu trúc lưới 2 cột (.hero-slide-grid) với slide Brand: cột chữ
+  // + cột media riêng (.hero-slide-media.is-photo). Class is-photo-slide cho phép
+  // css/style.css đổi nền hero (desktop) sang trắng trùng màu nền ảnh sản phẩm.
+  // Mobile giữ nguyên ảnh gốc (.jpg, full-bleed cover — không đổi theo yêu cầu
+  // khách). Desktop dùng bản đã tách nền (imageDesktop, .png trong suốt) vì ở đó
+  // ảnh hiển thị contain trong khung media riêng — nền trong suốt để không lộ
+  // hình chữ nhật trắng của ảnh gốc trên nền hero.
   PHOTO_CAMPAIGNS.forEach(function (c) {
     var slide = document.createElement("div");
-    slide.className = "hero-slide";
+    slide.className = "hero-slide is-photo-slide";
 
     var ctaRow = c.ctaText
       ? '<div class="hero-cta-row"><a class="btn btn-primary" href="' + c.ctaHref + '">' + c.ctaText + "</a></div>"
       : "";
 
     slide.innerHTML =
-      '<img src="' + c.image + '" alt="' + c.alt + '" loading="lazy">' +
-      '<div class="hero-copy"><div class="container">' +
-        '<span class="hero-tag">' + c.tag + "</span>" +
-        '<h1 class="display">' + c.headline + "</h1>" +
-        ctaRow +
-      "</div></div>" +
-      (c.graphic === "waveform" ? waveformHtml() : "");
+      '<div class="hero-copy"><div class="container hero-slide-grid">' +
+        '<div class="hero-slide-text">' +
+          '<span class="hero-tag">' + c.tag + "</span>" +
+          '<h1 class="display">' + c.headline + "</h1>" +
+          ctaRow +
+        "</div>" +
+        '<div class="hero-slide-media is-photo">' +
+          '<picture>' +
+            '<source media="(min-width: 981px)" srcset="' + c.imageDesktop + '">' +
+            '<img src="' + c.image + '" alt="' + c.alt + '" loading="lazy">' +
+          '</picture>' +
+        "</div>" +
+      "</div></div>";
     slidesEl.appendChild(slide);
   });
 
