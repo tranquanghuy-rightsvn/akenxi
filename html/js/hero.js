@@ -16,8 +16,8 @@
     {
       tag: "Sạc nhanh",
       headline: "Power<br>without limits.",
-      image: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_01.jpg",
-      imageDesktop: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_01_cutout.png",
+      image: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_02.jpg",
+      imageDesktop: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_02_cutout.png",
       alt: "AKENXI — củ sạc nhanh 100W",
       ctaText: "Khám phá Sạc nhanh",
       ctaHref: "san-pham.html",
@@ -25,9 +25,9 @@
     {
       tag: "New Product",
       headline: "Coming<br>soon.",
-      image: "images/products/akenxi_cable02/AKENXI_Cable_Web_01_1600x1600.jpg",
-      imageDesktop: "images/products/akenxi_cable02/AKENXI_Cable_Web_01_1600x1600_cutout.png",
-      alt: "AKENXI — sản phẩm sắp ra mắt",
+      image: "images/products/akenxi_charger02/AKENXI_product_1.jpeg",
+      imageDesktop: "images/products/akenxi_charger02/AKENXI_product_1.png",
+      alt: "AKENXI — pin sạc dự phòng MagSafe sắp ra mắt",
       ctaText: "",
       ctaHref: "",
     },
