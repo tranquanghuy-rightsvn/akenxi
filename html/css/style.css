@@ -306,6 +306,7 @@ svg { width: 100%; height: 100%; }
   height: clamp(460px, 94vh, 900px);
   overflow: hidden;
   background: var(--graphite);
+  touch-action: pan-y;
 }
 
 .hero-slide {
@@ -382,7 +383,11 @@ svg { width: 100%; height: 100%; }
   .hero-slide-media { top: 8px; right: 0; bottom: 8px; left: 50%; }
   .hero-slide-media.is-photo { top: 24px; bottom: 24px; }
 
-  .hero-slide-media.is-photo img { object-position: center; }
+  .hero-slide-media.is-photo img {
+    object-fit: contain;
+    object-position: center;
+    transform: scale(.88);
+  }
 
   .hero-slide-3d { background: var(--bg); }
 
@@ -1304,6 +1309,13 @@ svg { width: 100%; height: 100%; }
 .qc-btn:hover .qc-label { max-width: 140px; opacity: 1; }
 
 .qc-zalo { background: #0068ff; }
+.qc-tiktok {
+  background: #fff;
+  color: #111;
+  border: 1px solid #e5e7eb;
+}
+.qc-tiktok .qc-ico { padding: 7px; }
+.qc-tiktok .qc-ico img { width: 34px; height: 34px; }
 .qc-phone { background: var(--accent); }
 .qc-mess { background: #0084ff; }
 
@@ -1766,14 +1778,26 @@ svg { width: 100%; height: 100%; }
 
   .hero { height: clamp(420px, 76vh, 660px); }
 
+  /* Campaign ảnh dùng cùng nền trắng trên mobile và desktop. */
+  .hero,
+  .hero-slide.is-photo-slide { background: var(--bg); }
+  .hero-slide::after,
+  .hero-slide-media::after { content: none; }
+  .hero-slide-media.is-photo img {
+    object-fit: contain;
+    transform: scale(.82);
+  }
+  .hero-copy { color: var(--text); }
+  .hero-tag { border-color: rgba(51, 62, 76, .22); color: var(--text); text-shadow: none; }
+  .hero-copy .display { text-shadow: none; }
+
   /* Dưới 980px: media (3D hoặc ảnh, xem base rule .hero-slide-media ở trên)
      phủ kín toàn slide làm nền, chữ nằm đè lên trên — cùng 1 kiểu hiển thị cho
      mọi campaign trên mobile (đang ổn, giữ nguyên). */
 
-  /* Làm tối bớt phần media nền để chữ trắng đè lên vẫn đọc rõ (thay cho lớp
-     gradient cũ vốn nằm ngoài .hero-copy nên không phủ được lên media nữa). */
+  /* Không phủ lớp tối lên campaign ảnh. */
   .hero-slide-media::after {
-    content: "";
+    content: none;
     position: absolute;
     inset: 0;
     background: linear-gradient(90deg, rgba(10, 14, 20, .78) 0%, rgba(10, 14, 20, .4) 55%, rgba(10, 14, 20, .12) 100%);

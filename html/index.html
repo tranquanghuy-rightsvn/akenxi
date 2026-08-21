@@ -51,27 +51,6 @@
 
 <!-- ============================ HERO CAMPAIGN =========================== -->
     <section class="hero" id="heroSlider" aria-label="Campaign nổi bật">
-      <div class="hero-slide is-active" data-slide-brand>
-        <div class="hero-slide-3d" aria-hidden="true"></div>
-        <div class="hero-slide-media">
-          <canvas id="headphoneCanvas" aria-label="Mô hình tai nghe 3D" role="img"></canvas>
-          <div class="model-loader" id="modelLoader">
-            <div class="bar"><i id="loaderBar"></i></div>
-            <span id="loaderText">Đang tải mô hình 3D… 0%</span>
-          </div>
-        </div>
-        <div class="hero-copy">
-          <div class="container hero-slide-text">
-            <span class="hero-tag">Brand</span>
-            <h1 class="display">Power your<br>digital life</h1>
-            <p class="hero-sub">Technology designed for the way you live.</p>
-            <div class="hero-cta-row">
-              <a class="btn btn-primary" href="san-pham.html">Explore Products</a>
-              <a class="btn btn-outline" href="ve-chung-toi.html">Discover AKENXI</a>
-            </div>
-          </div>
-        </div>
-      </div>
       <div data-hero-slides></div>
       <div class="hero-dots" data-hero-dots aria-label="Chọn campaign"></div>
     </section>
@@ -567,10 +546,12 @@
       <div class="footer-col">
         <h4>Sản phẩm</h4>
         <ul>
-          <li><a href="san-pham.html">Âm thanh</a></li>
-          <li><a href="san-pham.html">Sạc nhanh</a></li>
-          <li><a href="san-pham.html">Nguồn điện</a></li>
-          <li><a href="san-pham.html">Cáp</a></li>
+          <li><a href="san-pham.html?cat=Âm thanh">Âm thanh</a></li>
+          <li><a href="san-pham.html?cat=Sạc nhanh">Sạc nhanh</a></li>
+          <li><a href="san-pham.html?cat=Nguồn điện">Nguồn điện</a></li>
+          <li><a href="san-pham.html?cat=Cáp">Cáp</a></li>
+          <li><a href="san-pham.html?cat=Di động">Di động</a></li>
+          <li><a href="san-pham.html?cat=Phụ kiện">Phụ kiện</a></li>
         </ul>
       </div>
 
@@ -615,6 +596,10 @@
       </span>
       <span class="qc-label">Zalo</span>
     </a>
+    <a class="qc-btn qc-tiktok" href="https://www.tiktok.com/@akenxi" target="_blank" rel="noopener" title="TikTok AKENXI">
+      <span class="qc-ico" aria-hidden="true"><img src="images/icons8-tiktok.svg" alt=""></span>
+      <span class="qc-label">TikTok</span>
+    </a>
     <a class="qc-btn qc-phone" href="tel:19006868" title="Gọi 1900 6868">
       <span class="qc-ico" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -657,15 +642,6 @@
 
   <div class="toast" data-toast hidden></div>
 
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "./js/vendor/three/build/three.module.js",
-      "three/addons/": "./js/vendor/three/examples/jsm/"
-    }
-  }
-  </script>
-  <script type="module" src="js/main.js"></script>
   <script src="js/ui.js" defer></script>
   <script src="js/cart.js" defer></script>
   <script src="js/hero.js" defer></script>

@@ -1,149 +1,67 @@
-/* Hero campaign carousel — slide "Brand" (mô hình 3D) đã nằm sẵn trong index.html
-   (xem js/main.js). File này chỉ dựng các slide ảnh còn lại + điều khiển chung
-   (autoplay, nút prev/next, kéo/vuốt). Đổi campaign ảnh = sửa mảng
-   PHOTO_CAMPAIGNS, không cần sửa CSS/markup. */
+/* Hero campaign carousel — dùng ảnh sản phẩm, không dùng mô hình 3D. */
 (function () {
-  var PHOTO_CAMPAIGNS = [
-    {
-      tag: "Âm thanh",
-      headline: "Sound.<br>Your way.",
-      image: "images/products/akenxi_earphone01/AKENXI_web_01.jpg",
-      imageDesktop: "images/products/akenxi_earphone01/AKENXI_web_01_cutout.png",
-      alt: "AKENXI — tai nghe true wireless",
-      ctaText: "Khám phá Âm thanh",
-      ctaHref: "san-pham.html?cat=Âm thanh",
-    },
-    {
-      tag: "Sạc nhanh",
-      headline: "Power<br>without limits.",
-      image: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_02.jpg",
-      imageDesktop: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_02_cutout.png",
-      alt: "AKENXI — củ sạc nhanh 100W",
-      ctaText: "Khám phá Sạc nhanh",
-      ctaHref: "san-pham.html?cat=Sạc nhanh",
-    },
-    {
-      tag: "New Product",
-      headline: "Coming<br>soon.",
-      image: "images/products/akenxi_charger02/AKENXI_product_1.jpeg",
-      imageDesktop: "images/products/akenxi_charger02/AKENXI_product_1.png",
-      alt: "AKENXI — pin sạc dự phòng MagSafe sắp ra mắt",
-      ctaText: "",
-      ctaHref: "",
-    },
+  var CAMPAIGNS = [
+    { tag: "Kết nối", headline: "Connect<br>your way.", image: "images/products/akenxi_cable01/AKENXI_cable_06.jpg", alt: "Cáp sạc AKENXI", ctaText: "Khám phá Cáp", ctaHref: "san-pham.html?cat=Cáp" },
+    { tag: "Âm thanh", headline: "Sound.<br>Your way.", image: "images/products/akenxi_earphone02/AKENXI_web_05_1800x1800.png", alt: "Tai nghe AKENXI", ctaText: "Khám phá Âm thanh", ctaHref: "san-pham.html?cat=Âm thanh" },
+    { tag: "Âm thanh", headline: "Hear<br>every detail.", image: "images/products/akenxi_earphone01/AKENXI_web_01_cutout.png", alt: "Tai nghe AKENXI", ctaText: "Khám phá Âm thanh", ctaHref: "san-pham.html?cat=Âm thanh" },
+    { tag: "Âm thanh", headline: "Sound<br>in style.", image: "images/products/akenxi_earphone01/AKENXI_web_04.jpg", alt: "Tai nghe AKENXI", ctaText: "Khám phá Âm thanh", ctaHref: "san-pham.html?cat=Âm thanh" },
+    { tag: "New Product", headline: "Coming<br>soon.", image: "images/products/akenxi_newProduct/akenxi_newProduct.jpg", alt: "Sản phẩm mới AKENXI", ctaText: "", ctaHref: "" }
   ];
 
   var root = document.getElementById("heroSlider");
   if (!root) return;
-
   var slidesEl = root.querySelector("[data-hero-slides]");
   var dotsEl = root.querySelector("[data-hero-dots]");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var index = 0;
   var timer = null;
 
-  // Dựng các slide ảnh (Audio/Charging/New Product) — slide "Brand" (3D) đã có sẵn trong HTML.
-  // Dùng chung cấu trúc với slide Brand: .hero-slide-media là lớp nền tràn viền
-  // (bleed hết chiều cao hero, nửa phải màn hình ở desktop — xem css/style.css),
-  // .hero-copy nổi lên trên với chữ nằm bên trái. Class is-photo-slide cho phép
-  // css/style.css đổi nền hero (desktop) sang trùng màu nền graphite của slide
-  // Brand. Mobile giữ nguyên ảnh gốc (.jpg, full-bleed cover). Desktop dùng bản
-  // đã tách nền (imageDesktop, .png trong suốt) để không lộ hình chữ nhật trắng
-  // của ảnh gốc trên nền hero.
-  PHOTO_CAMPAIGNS.forEach(function (c) {
+  CAMPAIGNS.forEach(function (campaign, i) {
     var slide = document.createElement("div");
-    slide.className = "hero-slide is-photo-slide";
-
-    var ctaRow = c.ctaText
-      ? '<div class="hero-cta-row"><a class="btn btn-primary" href="' + c.ctaHref + '">' + c.ctaText + "</a></div>"
-      : "";
-
-    slide.innerHTML =
-      '<div class="hero-slide-media is-photo">' +
-        '<picture>' +
-          '<source media="(min-width: 981px)" srcset="' + c.imageDesktop + '">' +
-          '<img src="' + c.image + '" alt="' + c.alt + '" loading="lazy">' +
-        '</picture>' +
-      "</div>" +
-      '<div class="hero-copy"><div class="container hero-slide-text">' +
-        '<span class="hero-tag">' + c.tag + "</span>" +
-        '<h1 class="display">' + c.headline + "</h1>" +
-        ctaRow +
-      "</div></div>";
+    slide.className = "hero-slide is-photo-slide" + (i === 0 ? " is-active" : "");
+    var cta = campaign.ctaText ? '<div class="hero-cta-row"><a class="btn btn-primary" href="' + campaign.ctaHref + '">' + campaign.ctaText + "</a></div>" : "";
+    slide.innerHTML = '<div class="hero-slide-media is-photo"><img src="' + campaign.image + '" alt="' + campaign.alt + '" loading="' + (i === 0 ? "eager" : "lazy") + '"></div><div class="hero-copy"><div class="container hero-slide-text"><span class="hero-tag">' + campaign.tag + '</span><h1 class="display">' + campaign.headline + '</h1>' + cta + '</div></div>';
     slidesEl.appendChild(slide);
-  });
 
-  // Toàn bộ slide theo đúng thứ tự DOM: Brand (3D, tĩnh) rồi tới các slide ảnh
-  var slideEls = root.querySelectorAll(".hero-slide");
-  var TAGS = ["Brand"].concat(PHOTO_CAMPAIGNS.map(function (c) { return c.tag; }));
-
-  TAGS.forEach(function (tag, i) {
     var dot = document.createElement("button");
     dot.type = "button";
     dot.className = "hero-dot" + (i === 0 ? " is-active" : "");
-    dot.setAttribute("aria-label", "Xem campaign " + tag);
+    dot.setAttribute("aria-label", "Xem campaign " + campaign.tag);
     dot.addEventListener("click", function () { go(i); restart(); });
     dotsEl.appendChild(dot);
   });
 
+  var slideEls = root.querySelectorAll(".hero-slide");
   var dotEls = dotsEl.querySelectorAll(".hero-dot");
-  var total = slideEls.length;
-
   function go(i) {
-    index = (i + total) % total;
+    index = (i + slideEls.length) % slideEls.length;
     slideEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
     dotEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
   }
-
-  function next() { go(index + 1); }
-  function prev() { go(index - 1); }
-
-  function stop() {
-    if (timer) { window.clearInterval(timer); timer = null; }
-  }
-
-  function start() {
-    if (reduceMotion || total < 2) return;
-    stop();   // luôn dọn interval cũ trước — tránh chồng nhiều interval khi
-              // mouseenter/mouseleave/focusin/focusout dồn dập lúc di chuột qua lại
-              // ở rìa hero, vốn là nguyên nhân khiến campaign nhảy liên tục
-    timer = window.setInterval(next, 5000);
-  }
-
+  function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+  function start() { if (reduceMotion || slideEls.length < 2) return; stop(); timer = window.setInterval(function () { go(index + 1); }, 5000); }
   function restart() { stop(); start(); }
-
   root.addEventListener("mouseenter", stop);
   root.addEventListener("mouseleave", start);
   root.addEventListener("focusin", stop);
   root.addEventListener("focusout", start);
 
-  /* Kéo/vuốt để đổi campaign — dùng Pointer Events nên cùng 1 đoạn code chạy cho
-     cả chuột (desktop) lẫn cảm ứng (mobile), không cần tách riêng touch/mouse.
-     Mô hình 3D không còn tự bắt kéo-xoay nữa (xem js/main.js) nên không tranh
-     chấp: pointerdown trên canvas vẫn nổi bọt lên tới root bình thường. */
-  var dragStartX = null;
-  var dragStartY = null;
-  var dragging = false;
-
+  var startX = null;
+  var startY = null;
   root.addEventListener("pointerdown", function (e) {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    dragging = true;
-    dragStartX = e.clientX;
-    dragStartY = e.clientY;
-  });
-
-  root.addEventListener("pointerup", function (e) {
-    if (!dragging) return;
-    dragging = false;
-    var dx = e.clientX - dragStartX;
-    var dy = e.clientY - dragStartY;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-      if (dx < 0) next(); else prev();
-      restart();
+    if (e.pointerType !== "mouse" || e.button === 0) {
+      startX = e.clientX;
+      startY = e.clientY;
+      root.setPointerCapture(e.pointerId);
     }
   });
-
-  root.addEventListener("pointercancel", function () { dragging = false; });
-
+  root.addEventListener("pointerup", function (e) {
+    if (startX === null) return;
+    var dx = e.clientX - startX;
+    var dy = e.clientY - startY;
+    startX = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { go(index + (dx < 0 ? 1 : -1)); restart(); }
+  });
+  root.addEventListener("pointercancel", function (e) { startX = null; if (root.hasPointerCapture(e.pointerId)) root.releasePointerCapture(e.pointerId); });
   start();
 })();
