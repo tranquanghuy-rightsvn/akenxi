@@ -11,7 +11,7 @@
       imageDesktop: "images/products/akenxi_earphone01/AKENXI_web_01_cutout.png",
       alt: "AKENXI — tai nghe true wireless",
       ctaText: "Khám phá Âm thanh",
-      ctaHref: "san-pham.html",
+      ctaHref: "san-pham.html?cat=Âm thanh",
     },
     {
       tag: "Sạc nhanh",
@@ -20,7 +20,7 @@
       imageDesktop: "images/products/akenxi_charger100W_01/AKENXI_100W_Web_02_cutout.png",
       alt: "AKENXI — củ sạc nhanh 100W",
       ctaText: "Khám phá Sạc nhanh",
-      ctaHref: "san-pham.html",
+      ctaHref: "san-pham.html?cat=Sạc nhanh",
     },
     {
       tag: "New Product",
@@ -37,6 +37,7 @@
   if (!root) return;
 
   var slidesEl = root.querySelector("[data-hero-slides]");
+  var dotsEl = root.querySelector("[data-hero-dots]");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var index = 0;
   var timer = null;
@@ -74,13 +75,24 @@
 
   // Toàn bộ slide theo đúng thứ tự DOM: Brand (3D, tĩnh) rồi tới các slide ảnh
   var slideEls = root.querySelectorAll(".hero-slide");
-  var prevBtn = root.querySelector("[data-hero-prev]");
-  var nextBtn = root.querySelector("[data-hero-next]");
+  var TAGS = ["Brand"].concat(PHOTO_CAMPAIGNS.map(function (c) { return c.tag; }));
+
+  TAGS.forEach(function (tag, i) {
+    var dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "hero-dot" + (i === 0 ? " is-active" : "");
+    dot.setAttribute("aria-label", "Xem campaign " + tag);
+    dot.addEventListener("click", function () { go(i); restart(); });
+    dotsEl.appendChild(dot);
+  });
+
+  var dotEls = dotsEl.querySelectorAll(".hero-dot");
   var total = slideEls.length;
 
   function go(i) {
     index = (i + total) % total;
     slideEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
+    dotEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
   }
 
   function next() { go(index + 1); }
@@ -104,10 +116,6 @@
   root.addEventListener("mouseleave", start);
   root.addEventListener("focusin", stop);
   root.addEventListener("focusout", start);
-
-  // Nút điều hướng 2 bên — chỉ hiển thị ở desktop (CSS ẩn trên mobile)
-  if (prevBtn) prevBtn.addEventListener("click", function () { prev(); restart(); });
-  if (nextBtn) nextBtn.addEventListener("click", function () { next(); restart(); });
 
   /* Kéo/vuốt để đổi campaign — dùng Pointer Events nên cùng 1 đoạn code chạy cho
      cả chuột (desktop) lẫn cảm ứng (mobile), không cần tách riêng touch/mouse.
