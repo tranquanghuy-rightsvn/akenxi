@@ -153,32 +153,11 @@ function readScroll() {
 window.addEventListener("scroll", readScroll, { passive: true });
 readScroll();
 
-/* ------------------------- Kéo chuột để xoay thêm ------------------------ */
-
-let dragX = 0;
-let dragY = 0;
-let dragging = false;
-let lastPointer = { x: 0, y: 0 };
-
-canvas.addEventListener("pointerdown", (e) => {
-  dragging = true;
-  lastPointer = { x: e.clientX, y: e.clientY };
-  canvas.setPointerCapture(e.pointerId);
-});
-
-canvas.addEventListener("pointermove", (e) => {
-  if (!dragging) return;
-  dragX += (e.clientX - lastPointer.x) * 0.006;
-  dragY += (e.clientY - lastPointer.y) * 0.004;
-  dragY = Math.min(Math.max(dragY, -0.35), 0.35);
-  lastPointer = { x: e.clientX, y: e.clientY };
-});
-
-const endDrag = () => { dragging = false; };
-canvas.addEventListener("pointerup", endDrag);
-canvas.addEventListener("pointercancel", endDrag);
-
 /* -------------------------------- Render loop ----------------------------- */
+/* Không còn kéo chuột để xoay thêm — canvas để pointerdown/move/up nổi bọt tự
+   nhiên lên #heroSlider, nơi js/hero.js dùng chính các sự kiện đó để đổi
+   campaign bằng kéo/vuốt (áp dụng cho mọi kích thước màn hình, không riêng
+   mobile). Model vẫn tự xoay theo cuộn trang như cũ. */
 
 const current = { y: BASE_ROT_Y, x: 0.06 };
 const clock = new THREE.Clock();
@@ -187,8 +166,8 @@ function animate() {
   const t = clock.getElapsedTime();
   const progress = scrollY / Math.max(window.innerHeight, 1); // 1 = đã cuộn 1 viewport
 
-  const targetY = BASE_ROT_Y + progress * SPIN_PER_VIEWPORT + dragX;
-  const targetX = 0.06 + Math.sin(progress * 1.6) * 0.16 + dragY;
+  const targetY = BASE_ROT_Y + progress * SPIN_PER_VIEWPORT;
+  const targetX = 0.06 + Math.sin(progress * 1.6) * 0.16;
 
   // lerp cho mượt, không giật theo từng bước cuộn
   const ease = reduceMotion ? 1 : 0.085;

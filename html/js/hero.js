@@ -1,7 +1,7 @@
 /* Hero campaign carousel — slide "Brand" (mô hình 3D) đã nằm sẵn trong index.html
    (xem js/main.js). File này chỉ dựng các slide ảnh còn lại + điều khiển chung
-   (autoplay, dot, vuốt). Đổi campaign ảnh = sửa mảng PHOTO_CAMPAIGNS, không cần
-   sửa CSS/markup. */
+   (autoplay, nút prev/next, kéo/vuốt). Đổi campaign ảnh = sửa mảng
+   PHOTO_CAMPAIGNS, không cần sửa CSS/markup. */
 (function () {
   var PHOTO_CAMPAIGNS = [
     {
@@ -37,19 +37,18 @@
   if (!root) return;
 
   var slidesEl = root.querySelector("[data-hero-slides]");
-  var dotsEl = root.querySelector("[data-hero-dots]");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var index = 0;
   var timer = null;
 
   // Dựng các slide ảnh (Audio/Charging/New Product) — slide "Brand" (3D) đã có sẵn trong HTML.
-  // Dùng chung cấu trúc lưới 2 cột (.hero-slide-grid) với slide Brand: cột chữ
-  // + cột media riêng (.hero-slide-media.is-photo). Class is-photo-slide cho phép
-  // css/style.css đổi nền hero (desktop) sang trắng trùng màu nền ảnh sản phẩm.
-  // Mobile giữ nguyên ảnh gốc (.jpg, full-bleed cover — không đổi theo yêu cầu
-  // khách). Desktop dùng bản đã tách nền (imageDesktop, .png trong suốt) vì ở đó
-  // ảnh hiển thị contain trong khung media riêng — nền trong suốt để không lộ
-  // hình chữ nhật trắng của ảnh gốc trên nền hero.
+  // Dùng chung cấu trúc với slide Brand: .hero-slide-media là lớp nền tràn viền
+  // (bleed hết chiều cao hero, nửa phải màn hình ở desktop — xem css/style.css),
+  // .hero-copy nổi lên trên với chữ nằm bên trái. Class is-photo-slide cho phép
+  // css/style.css đổi nền hero (desktop) sang trùng màu nền graphite của slide
+  // Brand. Mobile giữ nguyên ảnh gốc (.jpg, full-bleed cover). Desktop dùng bản
+  // đã tách nền (imageDesktop, .png trong suốt) để không lộ hình chữ nhật trắng
+  // của ảnh gốc trên nền hero.
   PHOTO_CAMPAIGNS.forEach(function (c) {
     var slide = document.createElement("div");
     slide.className = "hero-slide is-photo-slide";
@@ -59,36 +58,22 @@
       : "";
 
     slide.innerHTML =
-      '<div class="hero-copy"><div class="container hero-slide-grid">' +
-        '<div class="hero-slide-text">' +
-          '<span class="hero-tag">' + c.tag + "</span>" +
-          '<h1 class="display">' + c.headline + "</h1>" +
-          ctaRow +
-        "</div>" +
-        '<div class="hero-slide-media is-photo">' +
-          '<picture>' +
-            '<source media="(min-width: 981px)" srcset="' + c.imageDesktop + '">' +
-            '<img src="' + c.image + '" alt="' + c.alt + '" loading="lazy">' +
-          '</picture>' +
-        "</div>" +
+      '<div class="hero-slide-media is-photo">' +
+        '<picture>' +
+          '<source media="(min-width: 981px)" srcset="' + c.imageDesktop + '">' +
+          '<img src="' + c.image + '" alt="' + c.alt + '" loading="lazy">' +
+        '</picture>' +
+      "</div>" +
+      '<div class="hero-copy"><div class="container hero-slide-text">' +
+        '<span class="hero-tag">' + c.tag + "</span>" +
+        '<h1 class="display">' + c.headline + "</h1>" +
+        ctaRow +
       "</div></div>";
     slidesEl.appendChild(slide);
   });
 
   // Toàn bộ slide theo đúng thứ tự DOM: Brand (3D, tĩnh) rồi tới các slide ảnh
   var slideEls = root.querySelectorAll(".hero-slide");
-  var TAGS = ["Brand"].concat(PHOTO_CAMPAIGNS.map(function (c) { return c.tag; }));
-
-  TAGS.forEach(function (tag, i) {
-    var dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "hero-dot" + (i === 0 ? " is-active" : "");
-    dot.setAttribute("aria-label", "Xem campaign " + tag);
-    dot.addEventListener("click", function () { go(i); restart(); });
-    dotsEl.appendChild(dot);
-  });
-
-  var dotEls = dotsEl.querySelectorAll(".hero-dot");
   var prevBtn = root.querySelector("[data-hero-prev]");
   var nextBtn = root.querySelector("[data-hero-next]");
   var total = slideEls.length;
@@ -96,7 +81,6 @@
   function go(i) {
     index = (i + total) % total;
     slideEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
-    dotEls.forEach(function (el, n) { el.classList.toggle("is-active", n === index); });
   }
 
   function next() { go(index + 1); }
@@ -125,29 +109,33 @@
   if (prevBtn) prevBtn.addEventListener("click", function () { prev(); restart(); });
   if (nextBtn) nextBtn.addEventListener("click", function () { next(); restart(); });
 
-  /* Vuốt để đổi campaign trên mobile — áp dụng cho toàn bộ hero kể cả vùng mô
-     hình 3D, vì ở mobile canvas đã bị `pointer-events: none` (css/style.css) nên
-     không còn tranh chấp với thao tác kéo-xoay (chỉ bật ở desktop). */
-  var touchStartX = null;
-  var touchStartY = null;
+  /* Kéo/vuốt để đổi campaign — dùng Pointer Events nên cùng 1 đoạn code chạy cho
+     cả chuột (desktop) lẫn cảm ứng (mobile), không cần tách riêng touch/mouse.
+     Mô hình 3D không còn tự bắt kéo-xoay nữa (xem js/main.js) nên không tranh
+     chấp: pointerdown trên canvas vẫn nổi bọt lên tới root bình thường. */
+  var dragStartX = null;
+  var dragStartY = null;
+  var dragging = false;
 
-  root.addEventListener("touchstart", function (e) {
-    var t = e.touches[0];
-    touchStartX = t.clientX;
-    touchStartY = t.clientY;
-  }, { passive: true });
+  root.addEventListener("pointerdown", function (e) {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+  });
 
-  root.addEventListener("touchend", function (e) {
-    if (touchStartX === null) return;
-    var t = e.changedTouches[0];
-    var dx = t.clientX - touchStartX;
-    var dy = t.clientY - touchStartY;
-    touchStartX = null;
+  root.addEventListener("pointerup", function (e) {
+    if (!dragging) return;
+    dragging = false;
+    var dx = e.clientX - dragStartX;
+    var dy = e.clientY - dragStartY;
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
       if (dx < 0) next(); else prev();
       restart();
     }
   });
+
+  root.addEventListener("pointercancel", function () { dragging = false; });
 
   start();
 })();
